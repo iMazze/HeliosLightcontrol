@@ -68,4 +68,4 @@ manifest.mf
 nbbuild.xml
 nbproject
 
-.vscode
+/.vscode

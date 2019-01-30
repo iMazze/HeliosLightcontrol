@@ -16,7 +16,7 @@ struct package
 {
     uint16_t sender = 00;
     uint16_t reciever = 01;
-    data_type type = data;
+    //data_type type = data;
     uint16_t val_a;
     uint16_t val_b;
     uint16_t val_c;

@@ -1,5 +1,0 @@
-{
-    "board": "arduino:avr:megaADK",
-    "sketch": "HLC_LED_Matrix/HLC_LED_Matrix.ino",
-    "port": "/dev/cu.usbmodem14601"
-}

@@ -12,7 +12,10 @@ public:
 	void getHumidity();
 	void getColorTemp();
 	void getLux();
-	bool accesControl();// True= going in, False = going out
+	bool accesControl(); //true= going in, false = going out
+	void counter();
+	bool personLeft(); //true = minimum one person in room, false = no one left at room
+
 
 
 	//settingdata
@@ -28,7 +31,7 @@ private:
 	dht11 DHT11;
 	//Pin of sensor at arduino
 	#define DHT11PIN 8 //TODO: ANPASSEN!!
-	dht.begin();
+	DHT11.begin(9600);
 
 	//Initialization of acces control
 	//outdoor
@@ -47,6 +50,7 @@ private:
 	uint16_t mHumidity;
 	uint16_t mColorTemp;
 	uint16_t mLux;
+	uint16_t mNumberOfPersons;
 	//settingdata
 	uint16_t rate;//measuring rate [1/min] (MAX:1200 /min)
 

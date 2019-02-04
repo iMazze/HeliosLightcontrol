@@ -1,5 +1,9 @@
 #include "Sensoring.h"
 
+Sensoring::Sensoring()
+{
+}
+
 void Sensoring::getTemperature()
 {
 }
@@ -18,6 +22,7 @@ void Sensoring::getLux()
 
 bool Sensoring::accesControl()
 {
+	//sensor 1 outside, sensor 2 indoor
 	long time1 = 0;
 	long time2 = 0;
 	digitalWrite(trigger1, LOW);
@@ -36,8 +41,10 @@ bool Sensoring::accesControl()
 	digitalWrite(trigger2, LOW);
 	time2 = pulseIn(echo2, HIGH); //echotime2
 	interrupts();
-
-	if (time1 < (time2 - 100)) //3 cm tolerance
+	//if distance of one sensor between doorframe (which is indicated through measured time)
+	//is shorter than the other one, someone is going through the door
+	//if outer sensor was shorter, someone went in
+	if (time1 < (time2 - 100)) //~3 cm tolerance
 	{
 		return true;
 	}
@@ -47,7 +54,33 @@ bool Sensoring::accesControl()
 	}
 	else
 	{
+		break;
+	}
+}
+//method counts how many persons are inside the room
+void Sensoring::counter()
+{
+	//one more person went into the room
+	if (accesControl()==true)
+	{
+		++mNumberOfPersons;
+	}
+	//one left the room
+	else if (accesControl()==false)
+	{
+		--mNumberOfPersons;
+	}
+}
 
+bool Sensoring::personLeft()
+{
+	if (mNumberOfPersons>=1)
+	{
+		return true;
+	}
+	else 
+	{
+		return false;
 	}
 }
 

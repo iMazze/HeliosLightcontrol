@@ -1,45 +1,46 @@
-#ifndef Morse_h
-#define Morse_h
+#ifndef WIRELESSCONNECTION_H
+#define WIRELESSCONNECTION_H
 
 #include <Arduino.h>
 
-enum data_type
+#define CE_PIN 9 //This pin is used to set the nRF24 to standby (0) or active mode (1)
+#define CSN_PIN 10 //This pin is used to tell the nRF24 whether the SPI communication is a command or message to send out
+#define IRQ_PIN 1
+
+enum MSG_ID
 {
-    DATA,
-    TEMPERATURE,
-    HUMIDITY,
-    LUX,
-    COLOR
+    EMPTY = 0,
+    Temperatur = 11,
+    Luftfeuchte = 12,
+    Farbtemperatur = 13,
+    Helligkeit = 14
 };
 
 struct package
 {
-    uint16_t sender = 00;
-    uint16_t reciever = 01;
-    //data_type type = data;
-    uint16_t val_a;
-    uint16_t val_b;
-    uint16_t val_c;
-    uint16_t val_d;
-    uint16_t val_e;
+    MSG_ID id = MSG_ID::EMPTY;
+    uint64_t source_id = 00;
+    uint16_t data_0;
+    uint16_t data_1;
+    uint16_t data_2;
+    uint16_t data_3;
 };
-
-
-
 
 typedef struct package Package;
 
+
 class WirelessConnection
 {
-    
   public:
-    WirelessConnection();
-    void sendData(Package data);
+    WirelessConnection(uint64_t id);
+
+    void enableInterrupt();    
+    void sendData(Package data, uint16_t reciever_address);
     Package getData();
     Package getDataWithFilter(uint16_t filter_id);
   private:
-    int _pin;
-    const uint16_t m_id = 00;   // Address of this node in Octal format ( 04,031, etc)
+    uint64_t m_id;  //Create a pipe addresses for the nodes to communicate over
+    void static recieve_interrupt();
 };
 
 #endif

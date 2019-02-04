@@ -19,9 +19,9 @@
 ```
 
 ## Dependencies
-| Tables            |      Name of Lib      |  xxx |
+| Tables            |      Name of Lib      |  Website |
 |-------------------|:-------------:|------:|
-| HLC_Base          |   |   |
-| HLC_Lamp          |       |     |
-| HLC_LED_Matrix    |  |      |
+| HLC_Base          |   | https://github.com/adafruit/Adafruit_NeoPixel/archive/master.zip|
+| HLC_Lamp          |       | https://github.com/adafruit/Adafruit_NeoMatrix/archive/master.zip    |
+| HLC_LED_Matrix    |  | https://github.com/adafruit/Adafruit-GFX-Library/archive/master.zip     |
 | HLC_Sensor        |  |      |

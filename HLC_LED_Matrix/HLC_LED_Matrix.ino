@@ -3,7 +3,7 @@
 #include "src/HLC_Global/Debug.h"
 
 #include "src/LedMatrix.h"
-
+// Hallo Welt!
 const uint16_t timer_interval = 50; // 50ms
 uint32_t counter = 0;
 

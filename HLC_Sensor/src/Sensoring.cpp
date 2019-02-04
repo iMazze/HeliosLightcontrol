@@ -4,7 +4,7 @@ void Sensoring::getTemperature()
 {
 }
 
-void Sensoring::getHumintiy()
+void Sensoring::getHumidity()
 {
 }
 
@@ -16,6 +16,41 @@ void Sensoring::getLux()
 {
 }
 
+bool Sensoring::accesControl()
+{
+	long time1 = 0;
+	long time2 = 0;
+	digitalWrite(trigger1, LOW);
+	delayMicroseconds(3);
+	noInterrupts();
+	digitalWrite(trigger1, HIGH); //Trigger impuls 10 us
+	delayMicroseconds(10);
+	digitalWrite(trigger1, LOW);
+	time1 = pulseIn(echo1, HIGH); //echotime1
+	interrupts();
+	digitalWrite(trigger2, LOW);
+	delayMicroseconds(3);
+	noInterrupts();
+	digitalWrite(trigger2, HIGH); //Trigger impuls 10 us
+	delayMicroseconds(10);
+	digitalWrite(trigger2, LOW);
+	time2 = pulseIn(echo2, HIGH); //echotime2
+	interrupts();
+
+	if (time1 < (time2 - 100)) //3 cm tolerance
+	{
+		return true;
+	}
+	else if (time2 < (time1 - 100))
+	{
+		return false;
+	}
+	else
+	{
+
+	}
+}
+
 void Sensoring::setMeasuringRate()
 {
 }
@@ -23,7 +58,11 @@ void Sensoring::setMeasuringRate()
 void Sensoring::measuring()
 {
 	measuringLight();
+	mHumidity = DHT11.readHumidity();
+	mTemperature = DHT11.readTemperature();
 
+	//delaytime out of measurement rate
+	delay(60000/rate);
 }
 
 void Sensoring::measuringLight()

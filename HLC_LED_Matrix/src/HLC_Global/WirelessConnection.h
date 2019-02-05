@@ -34,7 +34,7 @@ class WirelessConnection
   public:
     WirelessConnection(uint64_t id);
 
-    void enableInterrupt();    
+    void attachInterruptFunction(void (* InterruptFunction)());    
     void sendData(Package data, uint16_t reciever_address);
     Package getData();
     Package getDataWithFilter(uint16_t filter_id);

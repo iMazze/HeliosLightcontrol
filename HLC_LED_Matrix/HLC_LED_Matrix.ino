@@ -1,9 +1,11 @@
 #include "src/HLC_Global/WirelessConnection.h"
 #include "src/HLC_Global/TimerOne.h"
 #include "src/HLC_Global/Debug.h"
+#include "src/HLC_Global/PackageBuffer.h"
 
 #include "src/LedMatrix.h"
-// Hallo Welt!
+
+
 const uint16_t timer_interval = 50; // 50ms
 uint32_t counter = 0;
 
@@ -12,6 +14,7 @@ uint32_t counter = 0;
 WirelessConnection wc = WirelessConnection(0xB00B1E5000LL);
 Debug d = Debug(9600, LED_BUILTIN);
 LedMatrix ledmatrix = LedMatrix();
+PackageBuffer pckBuff;
 
 // Initialisierung
 void setup()
@@ -21,11 +24,17 @@ void setup()
     Timer1.attachInterrupt(timer_loop);
 
     // Setup WirelessConnection
-    //wc.
+    wc.attachInterruptFunction(nrf_interrupt);
 
     // Setup LedMatrix
     //...
 };
+
+void nrf_interrupt()
+{
+    Package p = wc.getData();
+    
+}
 
 // Loop from Timer1
 void timer_loop() 

@@ -2,6 +2,7 @@
 
 Sensoring::Sensoring()
 {
+	dht1.begin();
 }
 
 void Sensoring::sendTemperature()
@@ -103,8 +104,8 @@ void Sensoring::setMeasuringRate(uint16_t r)
 void Sensoring::measuring()
 {
 	measuringLight();
-	mHumidity = DHT11.readHumidity();
-	mTemperature = DHT11.readTemperature();
+	mHumidity = dht1.readHumidity();
+	mTemperature = dht1.readTemperature();
 
 	//delaytime out of measurement rate
 	delay(60000/mRate);
@@ -120,18 +121,19 @@ void Sensoring::measuringLight()
 	tcs.getRawData(&red, &green, &blue, &clear);
 	convertingRGB(&red, &green, &blue, &clear);
 	//calculating Lux
-	mLux = calculateLux(red, green, blue);
+	mLux = tcs.calculateLux(red, green, blue);
 	//calculating color temperature
-	mColorTemp = calculateColorTemperature(red, green, blue);
+	mColorTemp = tcs.calculateColorTemperature(red, green, blue);
 }
 
 void Sensoring::convertingRGB(uint16_t *red, uint16_t *green, uint16_t *blue, uint16_t *clear)
 {
-	//Division of each proportion of color through intensity of clear light, multiplicated with 256 for a known spread
+	//Division of each proportion of color through intensity of clear light, multiplicated with 255 for a known spread
 	float r, g, b;
-	r = red; r /= sum;
-	g = green; g /= sum;
-	b = blue; b /= sum;
+	uint16_t sum = *clear;
+	r = *red / sum;
+	g = *green / sum;
+	b = *blue / sum;
 	r *= 255; g *= 255; b *= 255;
 	mRed = r; mGreen = g; mBlue = b;
 }

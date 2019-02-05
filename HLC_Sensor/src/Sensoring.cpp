@@ -1,22 +1,29 @@
-#include "Sensoring.h"
+#include "src/Sensoring.h"
 
 Sensoring::Sensoring()
 {
 }
 
-void Sensoring::getTemperature()
+void Sensoring::sendTemperature()
 {
 }
 
-void Sensoring::getHumidity()
+void Sensoring::sendHumidity()
 {
 }
 
-void Sensoring::getColorTemp()
+void Sensoring::sendColorTemp()
 {
 }
 
-void Sensoring::getLux()
+void Sensoring::sendLux()
+{
+}
+
+void Sensoring::sendRGB()
+{
+}
+void Sensoring::sendNumberOfPersons()
 {
 }
 
@@ -25,30 +32,32 @@ bool Sensoring::accesControl()
 	//sensor 1 outside, sensor 2 indoor
 	long time1 = 0;
 	long time2 = 0;
+	//supersonicsensor 1
 	digitalWrite(trigger1, LOW);
 	delayMicroseconds(3);
 	noInterrupts();
 	digitalWrite(trigger1, HIGH); //Trigger impuls 10 us
 	delayMicroseconds(10);
-	digitalWrite(trigger1, LOW);
+	digitalWrite(trigger1, LOW); //falling flank
 	time1 = pulseIn(echo1, HIGH); //echotime1
 	interrupts();
+	//supersonicsensor 2
 	digitalWrite(trigger2, LOW);
 	delayMicroseconds(3);
 	noInterrupts();
 	digitalWrite(trigger2, HIGH); //Trigger impuls 10 us
 	delayMicroseconds(10);
-	digitalWrite(trigger2, LOW);
+	digitalWrite(trigger2, LOW); //falling flank
 	time2 = pulseIn(echo2, HIGH); //echotime2
 	interrupts();
 	//if distance of one sensor between doorframe (which is indicated through measured time)
 	//is shorter than the other one, someone is going through the door
 	//if outer sensor was shorter, someone went in
-	if (time1 < (time2 - 100)) //~3 cm tolerance
+	if (time1 < (time2 - 800)) //~3 cm tolerance
 	{
 		return true;
 	}
-	else if (time2 < (time1 - 100))
+	else if (time2 < (time1 - 800))
 	{
 		return false;
 	}
@@ -57,18 +66,20 @@ bool Sensoring::accesControl()
 		break;
 	}
 }
-//method counts how many persons are inside the room
+
 void Sensoring::counter()
 {
 	//one more person went into the room
 	if (accesControl()==true)
 	{
 		++mNumberOfPersons;
+		delay(1000);
 	}
 	//one left the room
 	else if (accesControl()==false)
 	{
 		--mNumberOfPersons;
+		delay(1000);
 	}
 }
 
@@ -84,8 +95,9 @@ bool Sensoring::personLeft()
 	}
 }
 
-void Sensoring::setMeasuringRate()
+void Sensoring::setMeasuringRate(uint16_t r)
 {
+	mRate=r;
 }
 
 void Sensoring::measuring()
@@ -95,7 +107,7 @@ void Sensoring::measuring()
 	mTemperature = DHT11.readTemperature();
 
 	//delaytime out of measurement rate
-	delay(60000/rate);
+	delay(60000/mRate);
 }
 
 void Sensoring::measuringLight()
@@ -120,6 +132,6 @@ void Sensoring::convertingRGB(uint16_t *red, uint16_t *green, uint16_t *blue, ui
 	r = red; r /= sum;
 	g = green; g /= sum;
 	b = blue; b /= sum;
-	r *= 256; g *= 256; b *= 256;
+	r *= 255; g *= 255; b *= 255;
 	mRed = r; mGreen = g; mBlue = b;
 }

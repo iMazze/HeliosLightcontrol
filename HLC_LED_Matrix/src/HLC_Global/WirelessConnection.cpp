@@ -14,13 +14,15 @@ WirelessConnection::WirelessConnection(uint64_t id)
 {
     m_id = id;
 
+    radio.begin();
+
     radio.setAutoAck(1);                    // Ensure autoACK is enabled so rec sends ack packet to let you know it got the transmit packet payload
     radio.enableAckPayload();         //allows you to include payload on ack packet
     radio.setPALevel(RF24_PA_LOW); //Set power level to low, won't work well at higher levels (interfer with receiver)
     radio.openReadingPipe(1, m_id);      //open pipe o for recieving meassages with pipe address
     radio.startListening();                 // Start listening for messages
 
-    network.begin(90, m_id);  //(channel, node address)
+    //network.begin(90, m_id);  //(channel, node address)
 }
 
 
@@ -44,10 +46,13 @@ void WirelessConnection::sendData(Package data, uint16_t reciever_address)
 Package WirelessConnection::getData()
 {
     Package data;
-    network.update();
-    while ( network.available() ) {     // Is there any incoming data?
-        RF24NetworkHeader header;
-        network.read(header, &data, sizeof(data)); // Read the incoming data
+    // network.update();
+    // while ( network.available() ) {     // Is there any incoming data?
+    //     RF24NetworkHeader header;
+    //     network.read(header, &data, sizeof(data)); // Read the incoming data
+    // }
+    while(radio.available()) { //get data sent from transmit
+       radio.read( &data, sizeof(data) ); //read one byte of data and store it in gotByte variable
     }
 
     return data;

@@ -13,7 +13,11 @@ enum MSG_ID
     Temperatur = 11,
     Luftfeuchte = 12,
     Farbtemperatur = 13,
-    Helligkeit = 14
+    Helligkeit = 14,
+    Matrix_FFT_Show = 20,
+    Matrix_Fullon = 21,
+    Matrix_RGB = 22,
+    Matrix_HSV = 23
 };
 
 struct package

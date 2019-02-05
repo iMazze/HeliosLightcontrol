@@ -16,6 +16,9 @@ Debug d = Debug(9600, LED_BUILTIN);
 LedMatrix ledmatrix = LedMatrix();
 PackageBuffer pckBuff;
 
+// States
+boolean fft_active = false;
+
 // Initialisierung
 void setup()
 {
@@ -27,27 +30,83 @@ void setup()
     wc.attachInterruptFunction(nrf_interrupt);
 
     // Setup LedMatrix
-    //...
+    ledmatrix.init();
 };
 
 void nrf_interrupt()
 {
     Package p = wc.getData();
-    
+
+    // Adds the recieved package to the Buffer
+    pckBuff.addPackage(p);
 }
 
 // Loop from Timer1
 void timer_loop() 
 {
-    // alle 500ms
-    if(!(counter % 10))
+    // alle 50ms
+    if(!(counter % 1))
     {
+        if(pckBuff.hasPackages())
+        {
+            Package p = pckBuff.returnFirstPackage();
+            switch (p.id)
+            {
+                case MSG_ID::Matrix_FFT_Show:
+                    if(p.data_0 == 1)
+                    {
+                        // switch on
+                        fft_active = true;
+                    }
+                    else
+                    {
+                        // switch off
+                        fft_active = false;
+                    }
+                    break;
+                case MSG_ID::Matrix_Fullon:
+                    if(p.data_0 == 1)
+                    {
+                        ledmatrix.fullOn();
+                    }
+                    else
+                    {
+                        ledmatrix.fullOff();
+                    }
+                    break;
+                case MSG_ID::Matrix_HSV:
+                    if(p.data_0 == 1)
+                    {
+                        ledmatrix.setRGB(p.data_1, p.data_2, p.data_3);
+                    }
+                    else
+                    {
+                        ledmatrix.fullOff();
+                    }
+                    break;
+                case MSG_ID::Matrix_RGB:
+                    if(p.data_0 == 1)
+                    {
+                        ledmatrix.setHSV(p.data_1, p.data_2, p.data_3);
+                    }
+                    else
+                    {
+                        ledmatrix.fullOff();
+                    }
+                    break;    
+            }
+        }
+    }
+    // alle 500ms
+    else if(!(counter % 10))
+    {
+        // Weil ich es kann!
         d.toggleLed();
     } 
     // alle 1s
     else if(!(counter % 20))
     {
-        ledmatrix.doSickShit();
+        
     }
 
     // increment counter
@@ -57,4 +116,8 @@ void timer_loop()
 // Main Loop
 void loop(){
 
+    if(fft_active)
+    {
+        ledmatrix.doFFT();
+    }
 };

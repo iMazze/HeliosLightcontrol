@@ -3,6 +3,8 @@
         {
             "name": "Mac",
             "includePath": [
+                "/Users/imazze/Library/Arduino15/packages/esp8266/tools/**",
+                "/Users/imazze/Library/Arduino15/packages/esp8266/hardware/esp8266/2.5.0-beta3/**",
                 "/Applications/Arduino.app/Contents/Java/tools/**",
                 "/Applications/Arduino.app/Contents/Java/hardware/arduino/avr/**"
             ],

@@ -13,6 +13,11 @@
 class LedMatrix
 {    
 public:
+	Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(10, 15, 8,
+        NEO_MATRIX_TOP + NEO_MATRIX_LEFT +
+        NEO_MATRIX_ROWS + NEO_MATRIX_ZIGZAG,
+        NEO_GRB + NEO_KHZ800);
+        
     LedMatrix();
 
     void init();
@@ -33,10 +38,6 @@ public:
 private:
     const uint8_t ws2812_pin = 8;
 
-    Adafruit_NeoMatrix matrix = Adafruit_NeoMatrix(MatrixWidth, MatrixHeight, ws2812_pin,
-        NEO_MATRIX_TOP + NEO_MATRIX_LEFT +
-        NEO_MATRIX_ROWS + NEO_MATRIX_ZIGZAG,
-        NEO_GRB + NEO_KHZ800);
  
     // for FFT
     arduinoFFT FFT = arduinoFFT();

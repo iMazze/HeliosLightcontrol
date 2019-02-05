@@ -1,19 +1,20 @@
 #include "LedMatrix.h"
 #include "HSV_RGB.c"
 
+
+
+        
 LedMatrix::LedMatrix()
 {
     matrix.begin();
 
-    // FFT
-    Serial.begin(115200);
-    
+    // FFT    
     sampling_period_us = round(1500000*(1.0/SAMPLING_FREQUENCY));
 }
 
 void LedMatrix::init()
 {
-    matrix.fillScreen(0);
+    //matrix.fillScreen(matrix.Color(15, 0, 0));
     printColorWheel();
     matrix.show();
 
@@ -31,9 +32,9 @@ void LedMatrix::printColorWheel()
 
     uint8_t r,g,b;
 
-    for(y=0; y < MatrixWidth; y++) {
+    for(y=0; y < MatrixHeight; y++) {
     dy = 15.5 - (float)y;
-        for(x=0; x < MatrixHeight; x++) {
+        for(x=0; x < MatrixWidth; x++) {
             dx = 15.5 - (float)x;
             d  = dx * dx + dy * dy;
             if(d <= (16.5 * 16.5)) { // Inside the circle(ish)?
@@ -167,9 +168,14 @@ void LedMatrix::setRGB(uint8_t r, uint8_t g, uint8_t b)
 }
 void LedMatrix::setHSV(uint16_t h, uint8_t s, uint8_t v)
 {
-    byte r,g,b;
+    uint8_t r,g,b;
     // Calc HSV
-    HSV_to_RGB(h, s,v, &r, &g, &b);
+    HSV_to_RGB(h, s, v, &r, &g, &b);
+
+    
+    Serial.println(r);
+    Serial.println(g);
+    Serial.println(b);
 
     matrix.fillScreen(0);
     matrix.fillScreen(matrix.Color(r, g, b));

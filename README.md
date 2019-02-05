@@ -12,6 +12,9 @@
     |-- HLC_LED_Matrix.ino
 |-- HLC_Sensor
     |-- src
+        |-- Sensoring.cpp
+        |-- Sensoring.h
+    |-- HLC_Sensor.ino
 |-- HLC_Web
 |-- tmp
 |-- .gitignore

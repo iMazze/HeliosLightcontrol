@@ -24,4 +24,7 @@
 | HLC_Base          |   | https://github.com/adafruit/Adafruit_NeoPixel/archive/master.zip|
 | HLC_Lamp          |       | https://github.com/adafruit/Adafruit_NeoMatrix/archive/master.zip    |
 | HLC_LED_Matrix    |  | https://github.com/adafruit/Adafruit-GFX-Library/archive/master.zip     |
-| HLC_Sensor        |  |      |
+| HLC_Sensor        | Adafruit DHT-sensor-library  |  https://github.com/adafruit/DHT-sensor-library    |
+|                   | Adafruit sensor library      |  https://github.com/adafruit/Adafruit_Sensor       |
+|                   | Adafruit_TCS34725.h          |  https://github.com/adafruit/Adafruit_TCS34725     |
+|                   |                        |                                                    |

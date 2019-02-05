@@ -44,11 +44,11 @@ bool Sensoring::accesControl()
 	//if distance of one sensor between doorframe (which is indicated through measured time)
 	//is shorter than the other one, someone is going through the door
 	//if outer sensor was shorter, someone went in
-	if (time1 < (time2 - 100)) //~3 cm tolerance
+	if (time1 < (time2 - 800)) //~3 cm tolerance
 	{
 		return true;
 	}
-	else if (time2 < (time1 - 100))
+	else if (time2 < (time1 - 800))
 	{
 		return false;
 	}
@@ -64,11 +64,13 @@ void Sensoring::counter()
 	if (accesControl()==true)
 	{
 		++mNumberOfPersons;
+		delay(1000);
 	}
 	//one left the room
 	else if (accesControl()==false)
 	{
 		--mNumberOfPersons;
+		delay(1000);
 	}
 }
 
@@ -120,6 +122,6 @@ void Sensoring::convertingRGB(uint16_t *red, uint16_t *green, uint16_t *blue, ui
 	r = red; r /= sum;
 	g = green; g /= sum;
 	b = blue; b /= sum;
-	r *= 256; g *= 256; b *= 256;
+	r *= 255; g *= 255; b *= 255;
 	mRed = r; mGreen = g; mBlue = b;
 }

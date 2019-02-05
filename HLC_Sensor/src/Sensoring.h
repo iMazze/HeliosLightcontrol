@@ -2,25 +2,25 @@
 #define Sensoring_h
 
 #include <Wire.h>
-#include "Adafruit_TCS34725.h"
+#include "src/Adafruit_TCS34725.h"
+#include <DHT.h>
+#include <DHT_U.h>
+
 
 class Sensoring
 {
 public:
 	Sensoring();
-	void getTemperature();
-	void getHumidity();
-	void getColorTemp();
-	void getLux();
-	bool accesControl(); //true= going in, false = going out
-	void counter();
-	bool personLeft(); //true = minimum one person in room, false = no one left at room
+	void sendTemperature();
+	void sendHumidity();
+	void sendColorTemp();
+	void sendLux();
+	void sendRGB();
+	void sendNumberOfPersons();
+	void measuring();
 
 
-
-	//settingdata
-	uint16_t rate;//measuring rate [1/min] (MAX: 30 /min)
-	void setMeasuringRate();
+	void setMeasuringRate(uint16_t r);
 
 	
 private:
@@ -31,8 +31,6 @@ private:
 	#define DHTPIN 3 //Data-Pin which the sensor is conected to arduino
  	#define DHTTYPE DHT11 //Typ of DHT-Sensor
 	DHT DHT11(DHTPIN, DHTTYPE);
-	
-
 	DHT11.begin();
 
 	//Initialization of acces control
@@ -54,14 +52,15 @@ private:
 	uint16_t mLux;
 	uint16_t mNumberOfPersons;
 	//settingdata
-	uint16_t rate;//measuring rate [1/min] (MAX:1200 /min)
+	uint16_t mRate;//measuring rate [1/min] (MAX: 30 /min)
 
 	//Methods
-	void measuring();
 	void measuringLight();
 	//converts absolut values of red, green and blue to relative values depending to clearlight brightness
 	void convertingRGB(uint16_t *red, uint16_t *green, uint16_t *blue, uint16_t *clear);
-
+	bool accesControl(); //true= going in, false = going out
+	void counter(); //counter how many people are inside the room
+	bool personLeft(); //true = minimum one person in room, false = no one left at room
 };
 
 

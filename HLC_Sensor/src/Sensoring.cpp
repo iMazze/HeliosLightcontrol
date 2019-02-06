@@ -54,7 +54,7 @@ bool Sensoring::accesControl()
 	//if distance of one sensor between doorframe (which is indicated through measured time)
 	//is shorter than the other one, someone is going through the door
 	//if outer sensor was shorter, someone went in
-	if (time1 < (time2 - 800)) //~3 cm tolerance
+	if (time1 < (time2 - 800)) //~10 cm tolerance
 	{
 		return true;
 	}
@@ -126,14 +126,14 @@ void Sensoring::measuringLight()
 	mColorTemp = tcs.calculateColorTemperature(red, green, blue);
 }
 
-void Sensoring::convertingRGB(uint16_t *red, uint16_t *green, uint16_t *blue, uint16_t *clear)
+void Sensoring::convertingRGB(uint16_t red, uint16_t green, uint16_t blue, uint16_t clear)
 {
 	//Division of each proportion of color through intensity of clear light, multiplicated with 255 for a known spread
 	float r, g, b;
-	uint16_t sum = *clear;
-	r = *red / sum;
-	g = *green / sum;
-	b = *blue / sum;
+	uint16_t sum = clear;
+	r = red; r /= sum;
+	g = green; g /= sum;
+	b = blue; b /= sum;
 	r *= 255; g *= 255; b *= 255;
 	mRed = r; mGreen = g; mBlue = b; 
 }

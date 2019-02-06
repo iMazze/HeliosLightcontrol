@@ -34,6 +34,10 @@ void setup()
     Timer1.attachInterrupt(timer_loop);
 
     d.log("Init Complete");
+    Package p;
+    p.id = MSG_ID::Matrix_FFT_Show;
+    p.data_0 = 1;
+    wc.sendData(p, 0xB00B1E5000LL);
 };
 
 void nrf_interrupt()

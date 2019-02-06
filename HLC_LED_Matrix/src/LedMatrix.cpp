@@ -134,11 +134,11 @@ void LedMatrix::printBar(int frequenz, int amplitude)
 {
     for(int i = 0; i < amplitude; i++)
     {
-        byte r,g,b;
+        uint8_t r,g,b;
         // Calc HSV
-        HSV_to_RGB(24*(14-i), 100,100, &r, &g, &b);
+        //HSV_to_RGB(24*(14-i), 200,200, &r, &g, &b);
 
-        matrix.drawPixel(frequenz, 14-i, matrix.Color(r, g, b));
+        matrix.drawPixel(frequenz, 14-i, matrix.Color(255, 0, 0));
     }
 }
 
@@ -172,7 +172,7 @@ void LedMatrix::setHSV(uint16_t h, uint8_t s, uint8_t v)
     // Calc HSV
     HSV_to_RGB(h, s, v, &r, &g, &b);
 
-    
+
     Serial.println(r);
     Serial.println(g);
     Serial.println(b);

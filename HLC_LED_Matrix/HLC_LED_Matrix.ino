@@ -18,6 +18,10 @@ Debug d = Debug(Serial, LED_BUILTIN);
 LedMatrix ledmatrix = LedMatrix();
 PackageBuffer pckBuff;
 
+//fft
+
+
+/////////////
 // States
 boolean fft_active = false;
 
@@ -33,16 +37,16 @@ void setup()
 
 
     // Setup WirelessConnection
-    //wc.attachInterruptFunction(nrf_interrupt);
-    //wc.start();
+    wc.attachInterruptFunction(nrf_interrupt);
+    wc.start();
     
     // Setup LedMatrix
     //ledmatrix.init();
 
     // Setup Timer
-    //Timer1.initialize(timer_interval*1000);
-    //Timer1.attachInterrupt(timer_loop);
-
+    Timer1.initialize(timer_interval*1000);
+    Timer1.attachInterrupt(timer_loop);
+    
     d.log("Init Complete");
 };
 
@@ -52,7 +56,7 @@ void nrf_interrupt()
     Package p = wc.getData();
     d.logPackage(p);
 
-    // Adds the recieved package to the Buffer
+    //Adds the recieved package to the Buffer
     pckBuff.addPackage(p);
 }
 
@@ -77,9 +81,11 @@ void timer_loop()
                 {
                     // switch off
                     fft_active = false;
+                    ledmatrix.fullOff();
                 }
                 break;
             case MSG_ID::Matrix_Fullon:
+                fft_active = false;
                 if(p.data_0 == 1)
                 {
                     ledmatrix.fullOn();
@@ -90,6 +96,7 @@ void timer_loop()
                 }
                 break;
             case MSG_ID::Matrix_HSV:
+                fft_active = false;
                 if(p.data_0 == 1)
                 {
                     ledmatrix.setHSV(p.data_1, p.data_2, p.data_3);
@@ -100,6 +107,7 @@ void timer_loop()
                 }
                 break;
             case MSG_ID::Matrix_RGB:
+                fft_active = false;
                 if(p.data_0 == 1)
                 {
                     ledmatrix.setRGB(p.data_1, p.data_2, p.data_3);
@@ -122,7 +130,7 @@ void timer_loop()
     // alle 0.5s
     if(!(counter % 20))
     {
-        
+        //ledmatrix.doFFT();
     }
 
     // increment counter
@@ -131,10 +139,8 @@ void timer_loop()
  
 // Main Loop
 void loop(){
-
-    //if(fft_active)
+    if(fft_active)
     {
         ledmatrix.doFFT();
-        delay(500);
     }
 };

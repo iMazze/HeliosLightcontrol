@@ -37,7 +37,9 @@ void setup()
 
     pinMode(SwitchPin, INPUT_PULLUP); // Define the arcade switch NANO pin as an Input using Internal Pullups
     digitalWrite(SwitchPin,HIGH); // Set Pin to HIGH at beginning
-  
+
+    randomSeed(analogRead(1));
+
     d.log("Init Complete");
 };
 
@@ -65,7 +67,8 @@ void timer_loop()
     // increment counter
     counter++;
 }
- 
+
+ bool on=true;
 // Main Loop
 void loop(){
   delay(50);
@@ -81,5 +84,4 @@ void loop(){
         wc.sendData(p, 0xA00B1E5000LL);
         delay(500);
    }
-    
 };

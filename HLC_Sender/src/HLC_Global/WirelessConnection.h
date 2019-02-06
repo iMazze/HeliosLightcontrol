@@ -14,10 +14,12 @@
 enum MSG_ID
 {
     EMPTY = 0,
-    Temperatur = 11,
-    Luftfeuchte = 12,
-    Farbtemperatur = 13,
-    Helligkeit = 14,
+    Sensor_Temperature = 11,
+    Sensor_Humidity = 12,
+    Sensor_Colortemp = 13,
+    Sensor_Lux = 14,
+    Sensor_RGB = 15,
+    Sensor_Doorsensor =16,
     Matrix_FFT_Show = 20,
     Matrix_Fullon = 21,
     Matrix_RGB = 22,

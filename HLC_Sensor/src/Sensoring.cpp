@@ -106,19 +106,11 @@ bool Sensoring::personLeft()
 	}
 }
 
-void Sensoring::setMeasuringRate(uint16_t r)
-{
-	mRate=r;
-}
-
 void Sensoring::measuring()
 {
 	measuringLight();
 	mHumidity = dht1.readHumidity();
 	mTemperature = dht1.readTemperature();
-
-	//delaytime out of measurement rate
-	delay(60000/mRate);
 }
 
 void Sensoring::measuringLight()

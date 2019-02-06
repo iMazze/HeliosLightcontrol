@@ -1,31 +1,45 @@
-#include "src/Sensoring.h"
+#include "Sensoring.h"
 
 Sensoring::Sensoring()
 {
 	dht1.begin();
 }
 
-void Sensoring::sendTemperature()
+uint16_t Sensoring::sendTemperature()
 {
+	return (mTemperature);
 }
 
-void Sensoring::sendHumidity()
+uint16_t Sensoring::sendHumidity()
 {
+	return mHumidity;
 }
 
-void Sensoring::sendColorTemp()
+uint16_t Sensoring::sendColorTemp()
 {
+	return mColorTemp;
 }
 
-void Sensoring::sendLux()
+uint16_t Sensoring::sendLux()
 {
+	return mLux;
 }
 
-void Sensoring::sendRGB()
+uint16_t Sensoring::sendRed();
 {
+	return mRed;
 }
-void Sensoring::sendNumberOfPersons()
+uint16_t Sensoring::sendGreen();
 {
+	return mGreen;
+}
+uint16_t Sensoring::sendBlue();
+{
+	return mBlue;
+}
+uint16_t Sensoring::sendNumberOfPersons()
+{
+	retrun mNumberOfPersons;
 }
 
 bool Sensoring::accesControl()
@@ -61,10 +75,6 @@ bool Sensoring::accesControl()
 	else if (time2 < (time1 - 800))
 	{
 		return false;
-	}
-	else
-	{
-		break;
 	}
 }
 
@@ -119,7 +129,7 @@ void Sensoring::measuringLight()
 	uint16_t blue;
 	//get abslout values from sensor
 	tcs.getRawData(&red, &green, &blue, &clear);
-	convertingRGB(&red, &green, &blue, &clear);
+	convertingRGB(red, green, blue, clear);
 	//calculating Lux
 	mLux = tcs.calculateLux(red, green, blue);
 	//calculating color temperature

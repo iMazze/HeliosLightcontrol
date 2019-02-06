@@ -25,21 +25,21 @@ uint16_t Sensoring::sendLux()
 	return mLux;
 }
 
-uint16_t Sensoring::sendRed();
+uint16_t Sensoring::sendRed()
 {
 	return mRed;
 }
-uint16_t Sensoring::sendGreen();
+uint16_t Sensoring::sendGreen()
 {
 	return mGreen;
 }
-uint16_t Sensoring::sendBlue();
+uint16_t Sensoring::sendBlue()
 {
 	return mBlue;
 }
 uint16_t Sensoring::sendNumberOfPersons()
 {
-	retrun mNumberOfPersons;
+	return mNumberOfPersons;
 }
 
 bool Sensoring::accesControl()

@@ -16,22 +16,31 @@ Sensoring Sensors;
 uint16_t NumberOfPersonsOld = 0;
 bool restarted = true;
 
+//sensors
+#define SwitchPin 8 // Arcade switch is connected to Pin 8 on NANO
+
 void setup() {
   // put your setup code here, to run once:
   radio_24.begin();
-    // Setup Timer
-    Timer1.initialize(timer_interval*1000);
-    Timer1.attachInterrupt(timer_loop);
+  // Setup Timer
+  Timer1.initialize(timer_interval*1000);
+  Timer1.attachInterrupt(timer_loop);
+  
+  pinMode(SwitchPin, INPUT_PULLUP); // Define the arcade switch NANO pin as an Input using Internal Pullups
+  digitalWrite(SwitchPin,HIGH); // Set Pin to HIGH at beginning
 
-    // Setup WirelessConnection
-    wc.start();
 
-    Serial.begin(9600);
+  // Setup WirelessConnection
+  wc.start();
+
+  Serial.begin(9600);
+  Serial.println ("Ende Setup");
 }
 
 // Loop from Timer1
 void timer_loop() 
 {
+  Serial.println ("Timer");
     // alle 25ms
     if(!(counter % 1))
     {
@@ -45,13 +54,13 @@ void timer_loop()
         if (NumberOfPersonsOld != Sensors.sendNumberOfPersons() || restarted == true)
         {
             Package Persons; //Package with number of persons which are actual inside the room
-            Persons= MSG_ID::Sensor_Doorsensor;
+            Persons.id = MSG_ID::Sensor_Doorsensor;
             Persons.data_0 = Sensors.sendNumberOfPersons();
             Persons.data_1 = 0;
             Persons.data_2 = 0;
             Persons.data_3 = 0;
-
-            wc.sendData(RGB, 0xA00B1E5000LL);
+            NumberOfPersonsOld = Sensors.sendNumberOfPersons();
+            wc.sendData(Persons, 0xA00B1E5000LL);
             delay(10);
         }
         restarted=false;
@@ -109,7 +118,7 @@ void timer_loop()
         delay(10);
 
         Package RGB; //Package with all RGB values of light
-        RGB= MSG_ID::Sensor_RGB;
+        RGB.id = MSG_ID::Sensor_RGB;
         RGB.data_0 = Sensors.sendRed();
         RGB.data_1 = Sensors.sendGreen();
         RGB.data_2 = Sensors.sendBlue();
@@ -126,5 +135,6 @@ void timer_loop()
 // mainloop
 void loop() {
   // put your main code here, to run repeatedly:
- 
-}
+ Serial.println("Main");
+ delay(500);
+};

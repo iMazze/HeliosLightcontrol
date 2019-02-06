@@ -62,14 +62,8 @@ void timer_loop()
             switch (p.id)
             {
             case MSG_ID::Temperatur:
-              if(p.data_0 < 15)
-              {
-                   sendColor(11);
-              }
-              else{
-                sendColor(200);
-              }
-                break;   
+              sendColor(map(p.data_0, 20, 30, 0, 359));
+              break;   
             }
         }
     }

@@ -1,0 +1,6 @@
+{
+    "port": "/dev/cu.usbserial-1440",
+    "board": "arduino:avr:nano",
+    "configuration": "cpu=atmega328old",
+    "sketch": "HLC_Base.ino"
+}

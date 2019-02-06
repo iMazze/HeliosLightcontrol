@@ -4,7 +4,7 @@ class PackageBuffer
 {
 private:
     // Declaration
-    Package myArray[20];
+    Package myArray[4];
 
     uint16_t numberOfElements = 0;
 public:

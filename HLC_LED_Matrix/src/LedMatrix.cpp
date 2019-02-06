@@ -68,9 +68,6 @@ void LedMatrix::printColorWheel()
 }
 void LedMatrix::doFFT()
 {
-    double vReal[SAMPLES];
-    double vImag[SAMPLES];
-
     /*SAMPLING*/
     for(int i=0; i<SAMPLES; i++)
     {
@@ -89,45 +86,34 @@ void LedMatrix::doFFT()
     FFT.ComplexToMagnitude(vReal, vImag, SAMPLES);
     double peak = FFT.MajorPeak(vReal, SAMPLES, SAMPLING_FREQUENCY);
  
-
-
-    /*PRINT RESULTS*/
-    //Serial.println(peak);     //Print out what frequency is the most dominant.
-    printFFT(vReal);
-
-    //delay(5);  //Repeat the process every second OR:
-}
-
-void LedMatrix::printFFT(double fftArr[SAMPLES])
-{
-    // Calculate
+    /*PRINT RESULTS*/ 
     int arr[16];
+    arr[0] = 0;
     int cnt = 0;
     int index = 0;
-
     for(int i=0; i<(SAMPLES); i++)
     {
-        arr[index] += fftArr[i];
+        arr[index] += vReal[i];
 
-        if(cnt == 7)
+        if(cnt == 3)
         {
-            index++;
+            index ++;
+            arr[index] = 0;
             cnt = 0;
         }
         cnt++;
     }
-
-    // Ausgabe
+ 
     matrix.fillScreen(0);
-
+  
+  
     for(int i=0; i<17; i++)
     {
-        //Serial.print(SAMPLING_FREQUENCY / 16 * (i), 1);
-        //Serial.print(" ");
-        //Serial.println(arr[i-1]/(float)8000.0*15.0, 1);
-        printBar(i-1, (float)arr[i]/8000.0*15.0);
+        printBar(i-1, (float)arr[i]/3000.0*15.0);
+
     }
     matrix.show();
+
 }
 
 void LedMatrix::printBar(int frequenz, int amplitude)
@@ -138,7 +124,7 @@ void LedMatrix::printBar(int frequenz, int amplitude)
         // Calc HSV
         //HSV_to_RGB(24*(14-i), 200,200, &r, &g, &b);
 
-        matrix.drawPixel(frequenz, 14-i, matrix.Color(255, 0, 0));
+        matrix.drawPixel(frequenz, 14-i, matrix.Color(50, 0, 0));
     }
 }
 
@@ -155,8 +141,10 @@ void LedMatrix::fullOn()
 }
 void LedMatrix::fullOff()
 {
+    delay(500);
     matrix.fillScreen(0);
     matrix.show();
+    delay(50);
 }
 
 void LedMatrix::setRGB(uint8_t r, uint8_t g, uint8_t b)

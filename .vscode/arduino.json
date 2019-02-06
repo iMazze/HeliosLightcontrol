@@ -2,5 +2,5 @@
     "board": "arduino:avr:nano",
     "configuration": "cpu=atmega328old",
     "sketch": "HLC_LED_Matrix/HLC_LED_Matrix.ino",
-    "port": "/dev/cu.usbserial"
+    "port": "/dev/cu.usbserial-1410"
 }

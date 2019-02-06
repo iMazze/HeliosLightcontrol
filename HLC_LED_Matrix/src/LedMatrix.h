@@ -6,7 +6,7 @@
 #include <Adafruit_NeoPixel.h>
 
 // For FFT
-#define SAMPLES 128             //Must be a power of 2
+#define SAMPLES 64             //Must be a power of 2
 #define SAMPLING_FREQUENCY 5000 //Hz, must be less than 10000 due to ADC
  
 
@@ -17,14 +17,14 @@ public:
         NEO_MATRIX_TOP + NEO_MATRIX_LEFT +
         NEO_MATRIX_ROWS + NEO_MATRIX_ZIGZAG,
         NEO_GRB + NEO_KHZ800);
-        
+
     LedMatrix();
 
     void init();
 
     void printColorWheel();
     void printBar(int frequenz, int amplitude);
-    void printFFT(double fftArr[SAMPLES]);
+    //void printFFT(double fftArr[SAMPLES]);
     void doFFT();
 
     void fullOn();
@@ -43,6 +43,9 @@ private:
     arduinoFFT FFT = arduinoFFT();
     unsigned int sampling_period_us;
     unsigned long microseconds;
+    
+    double vReal[SAMPLES];
+    double vImag[SAMPLES];
     
     
 };

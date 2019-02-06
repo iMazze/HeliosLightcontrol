@@ -33,15 +33,15 @@ void setup()
 
 
     // Setup WirelessConnection
-    wc.attachInterruptFunction(nrf_interrupt);
-    wc.start();
+    //wc.attachInterruptFunction(nrf_interrupt);
+    //wc.start();
     
     // Setup LedMatrix
     //ledmatrix.init();
 
     // Setup Timer
-    Timer1.initialize(timer_interval*1000);
-    Timer1.attachInterrupt(timer_loop);
+    //Timer1.initialize(timer_interval*1000);
+    //Timer1.attachInterrupt(timer_loop);
 
     d.log("Init Complete");
 };
@@ -132,8 +132,9 @@ void timer_loop()
 // Main Loop
 void loop(){
 
-    if(fft_active)
+    //if(fft_active)
     {
         ledmatrix.doFFT();
+        delay(500);
     }
 };

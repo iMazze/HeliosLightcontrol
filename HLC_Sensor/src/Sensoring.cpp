@@ -135,5 +135,5 @@ void Sensoring::convertingRGB(uint16_t *red, uint16_t *green, uint16_t *blue, ui
 	g = *green / sum;
 	b = *blue / sum;
 	r *= 255; g *= 255; b *= 255;
-	mRed = r; mGreen = g; mBlue = b;
+	mRed = r; mGreen = g; mBlue = b; 
 }

@@ -30,4 +30,4 @@
 | HLC_Sensor        | Adafruit DHT-sensor-library  |  https://github.com/adafruit/DHT-sensor-library    |
 |                   | Adafruit sensor library      |  https://github.com/adafruit/Adafruit_Sensor       |
 |                   | Adafruit_TCS34725.h          |  https://github.com/adafruit/Adafruit_TCS34725     |
-|                   |                        |                                                test2    |
+|                   |                        |                                                          |

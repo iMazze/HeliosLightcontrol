@@ -29,7 +29,7 @@ public:
 	uint16_t sendBlue();
 	uint16_t sendNumberOfPersons();
 	void measuring();
-	void counter(); //counter how many people are inside the room
+ 	void accesControl();//counter how many people are inside the room
 	
 private:
 	//Initialization of lightsensor
@@ -56,7 +56,6 @@ private:
 	void measuringLight();
 	//converts absolut values of red, green and blue to relative values depending to clearlight brightness
 	void convertingRGB(uint16_t red, uint16_t green, uint16_t blue, uint16_t clear);
-	bool accesControl(); //true= going in, false = going out
 	bool personLeft(); //true = minimum one person in room, false = no one left at room
 };
 

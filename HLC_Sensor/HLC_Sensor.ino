@@ -13,25 +13,23 @@ RF24 radio_24(9,10);
 WirelessConnection wc = WirelessConnection(radio_24, 0xC00B1E5000LL);
 
 Sensoring Sensors;
+
 uint16_t NumberOfPersonsOld = 0;
 bool restarted = true;
 
-//sensors
-#define SwitchPin 8 // Arcade switch is connected to Pin 8 on NANO
 
 void setup() {
   // put your setup code here, to run once:
   radio_24.begin();
-  // Setup Timer
-  Timer1.initialize(timer_interval*1000);
-  Timer1.attachInterrupt(timer_loop);
-  
-  pinMode(SwitchPin, INPUT_PULLUP); // Define the arcade switch NANO pin as an Input using Internal Pullups
-  digitalWrite(SwitchPin,HIGH); // Set Pin to HIGH at beginning
-
 
   // Setup WirelessConnection
   wc.start();
+
+  // Setup Timer
+  Timer1.initialize(timer_interval*1000);
+  Timer1.attachInterrupt(timer_loop);
+
+  
 
   Serial.begin(9600);
   Serial.println ("Ende Setup");
@@ -40,7 +38,6 @@ void setup() {
 // Loop from Timer1
 void timer_loop() 
 {
-  Serial.println ("Timer");
     // alle 25ms
     if(!(counter % 1))
     {
@@ -49,21 +46,27 @@ void timer_loop()
     // alle 50ms
     if(!(counter % 2))
     {
-        //Durchlaufen der Abstandsmessung zwischen den Türrahmen, um ein- bzw herausgehende Personen zu erkennen
-        Sensors.counter();
-        if (NumberOfPersonsOld != Sensors.sendNumberOfPersons() || restarted == true)
-        {
-            Package Persons; //Package with number of persons which are actual inside the room
-            Persons.id = MSG_ID::Sensor_Doorsensor;
-            Persons.data_0 = Sensors.sendNumberOfPersons();
-            Persons.data_1 = 0;
-            Persons.data_2 = 0;
-            Persons.data_3 = 0;
-            NumberOfPersonsOld = Sensors.sendNumberOfPersons();
-            wc.sendData(Persons, 0xA00B1E5000LL);
-            delay(10);
-        }
-        restarted=false;
+         //Durchlaufen der Abstandsmessung zwischen den Türrahmen, um ein- bzw herausgehende Personen zu erkennen
+         Sensors.accesControl();
+         uint16_t tNumber = Sensors.sendNumberOfPersons();
+         if (NumberOfPersonsOld != tNumber || restarted == true)
+         {
+          noInterrupts();
+             Serial.println ("Number:");
+             Serial.println (tNumber);
+             Package Persons; //Package with number of persons which are actual inside the room
+             Persons.id = MSG_ID::Sensor_Doorsensor;
+             Persons.data_0 = tNumber;
+             Persons.data_1 = 0;
+             Persons.data_2 = 0;
+             Persons.data_3 = 0;
+             NumberOfPersonsOld = tNumber;
+             wc.sendData(Persons, 0xA00B1E5000LL);
+             delay(1000);
+          interrupts();
+         }
+         restarted=false;
+
     }
     // alle 250ms
     if(!(counter % 10))
@@ -72,6 +75,7 @@ void timer_loop()
     // alle 0.5s
     if(!(counter % 20))
     {
+
     }
     // alle 1s
     if(!(counter % 40))
@@ -135,6 +139,6 @@ void timer_loop()
 // mainloop
 void loop() {
   // put your main code here, to run repeatedly:
- Serial.println("Main");
+ //Serial.println("Main");
  delay(500);
 };

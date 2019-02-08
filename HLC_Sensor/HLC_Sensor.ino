@@ -1,14 +1,18 @@
 /***************************************************************************************************************
-FILE: 
+FILE: HLC_Sensor.ino
 PROJECT: HELIOSLIGHTCONTROL
-MODULE: 
+MODULE: HLC_Sensor
 Description:
+  Arduino mainskript for sensor module.
+  Opening up an 2.4 GHz connection to send all datapackages to base.
+  controlling of timer loop and measuring rate
 
 
 Compiler dependencies or special instructions:
-
+  AVRISP mkII
 REVISION HISTORY
 Date: By: Description:
+08.02.2019: Jonas Schellhorn: Header, etc.
 ****************************************************************************************************************/
 #include "src/HLC_Global/WirelessConnection.h"
 #include "src/HLC_Global/TimerOne.h"
@@ -17,7 +21,7 @@ Date: By: Description:
 #include "src/Sensoring.h"
 
 
-const uint16_t timer_interval = 25; // 25ms
+//const uint16_t timer_interval = 25; // 25ms
 uint32_t counter = 0;
 
 RF24 radio_24(9,10);
@@ -37,8 +41,8 @@ void setup() {
   wc.start();
 
   // Setup Timer
-  Timer1.initialize(timer_interval*1000);
-  Timer1.attachInterrupt(timer_loop);
+  // Timer1.initialize(timer_interval*1000);
+  // Timer1.attachInterrupt(timer_loop);
 
   
 
@@ -49,7 +53,14 @@ void setup() {
 // Loop from Timer1
 void timer_loop() 
 {
-    // alle 25ms
+    
+}
+
+// mainloop
+void loop() {
+  // put your main code here, to run repeatedly:
+ //Serial.println("Main");
+// alle 25ms
     if(!(counter % 1))
     {
         //Code, der alle 25 ms ausgeführt werden soll
@@ -58,25 +69,25 @@ void timer_loop()
     if(!(counter % 2))
     {
          //Durchlaufen der Abstandsmessung zwischen den Türrahmen, um ein- bzw herausgehende Personen zu erkennen
-         Sensors.accesControl();
-         uint16_t tNumber = Sensors.sendNumberOfPersons();
-         if (NumberOfPersonsOld != tNumber || restarted == true)
-         {
-          noInterrupts();
-             Serial.println ("Number:");
-             Serial.println (tNumber);
-             Package Persons; //Package with number of persons which are actual inside the room
-             Persons.id = MSG_ID::Sensor_Doorsensor;
-             Persons.data_0 = tNumber;
-             Persons.data_1 = 0;
-             Persons.data_2 = 0;
-             Persons.data_3 = 0;
-             NumberOfPersonsOld = tNumber;
-             wc.sendData(Persons, 0xA00B1E5000LL);
-             delay(1000);
-          interrupts();
-         }
-         restarted=false;
+        //  Sensors.accesControl();
+        //  uint16_t tNumber = Sensors.sendNumberOfPersons();
+        //  if (NumberOfPersonsOld != tNumber || restarted == true)
+        //  {
+        //   noInterrupts();
+        //      Serial.println ("Number:");
+        //      Serial.println (tNumber);
+        //      Package Persons; //Package with number of persons which are actual inside the room
+        //      Persons.id = MSG_ID::Sensor_Doorsensor;
+        //      Persons.data_0 = tNumber;
+        //      Persons.data_1 = 0;
+        //      Persons.data_2 = 0;
+        //      Persons.data_3 = 0;
+        //      NumberOfPersonsOld = tNumber;
+        //      wc.sendData(Persons, 0xA00B1E5000LL);
+        //      delay(1000);
+        //   interrupts();
+        //  }
+        //  restarted=false;
 
     }
     // alle 250ms
@@ -91,6 +102,8 @@ void timer_loop()
     // alle 1s
     if(!(counter % 40))
     {
+        Serial.println("");
+        Serial.println("Sensordaten");
         Sensors.measuring();
         Package temp; // Package with temperaturvalue
         temp.id = MSG_ID::Sensor_Temperature;
@@ -141,15 +154,9 @@ void timer_loop()
 
         wc.sendData(RGB, 0xA00B1E5000LL);
         delay(10);
+        delay (1000);
     }
 
     // increment counter
     counter++;
-}
-
-// mainloop
-void loop() {
-  // put your main code here, to run repeatedly:
- //Serial.println("Main");
- delay(500);
 };

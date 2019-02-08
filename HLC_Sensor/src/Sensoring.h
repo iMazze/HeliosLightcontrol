@@ -1,14 +1,15 @@
 /***************************************************************************************************************
-FILE: 
+FILE: Sensoring.h
 PROJECT: HELIOSLIGHTCONTROL
-MODULE: 
+MODULE: HLC_Sensor
 Description:
-
+	Class to get acces to all sensors and make data available over global variables
 
 Compiler dependencies or special instructions:
 
 REVISION HISTORY
 Date: By: Description:
+08.02.2019: Jonas Schellhorn: Header, etc.
 ****************************************************************************************************************/
 #ifndef Sensoring_h
 #define Sensoring_h

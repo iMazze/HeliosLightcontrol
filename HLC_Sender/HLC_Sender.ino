@@ -40,6 +40,15 @@ void setup()
 
     randomSeed(analogRead(1));
 
+    Package p;
+        p.id = MSG_ID::Matrix_RGB;
+        p.data_0 = 1;
+        p.data_1 = 100;
+        p.data_2 = 100;
+        p.data_3 = 0;
+
+        wc.sendData(p, 0xB00B1E5000LL);
+        
     d.log("Init Complete");
 };
 

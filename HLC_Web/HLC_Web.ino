@@ -62,7 +62,7 @@ void loop()
   }
   
   // Wait until the client sends some data
-  Serial.println("new client");
+  //Serial.println("new client");
   unsigned long ultimeout = millis()+250;
   while(!client.available() && (millis()<ultimeout) )
   {
@@ -70,19 +70,19 @@ void loop()
   }
   if(millis()>ultimeout) 
   { 
-    Serial.println("client connection time-out!");
+    //Serial.println("client connection time-out!");
     return; 
   }
   
   // Read the first line of the request
   String sRequest = client.readStringUntil('\r');
-  Serial.println(sRequest);
+  //Serial.println(sRequest);
   client.flush();
   
   // stop client, if request is empty
   if(sRequest=="")
   {
-    Serial.println("empty request! - stopping client");
+    //Serial.println("empty request! - stopping client");
     client.stop();
     return;
   }
@@ -125,12 +125,12 @@ void loop()
     if(iEqu>=0)
     {
       sCmd = sParam.substring(iEqu+1,sParam.length());
-      Serial.println(sCmd);
+      Serial.println("anfang:"+sCmd+"ende");
     }
   }
 
   Package p;
-  Serial.write((byte*)&p, sizeof(p));
+  //Serial.write((byte*)&p, sizeof(p));
   
   
   ///////////////////////////
@@ -210,5 +210,5 @@ void loop()
   
   // and stop the client
   client.stop();
-  Serial.println("Client disonnected");
+  //Serial.println("Client disonnected");
 }

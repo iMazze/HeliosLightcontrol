@@ -62,8 +62,11 @@ void timer_loop()
             switch (p.id)
             {
             case MSG_ID::Temperatur:
-              sendColor(map(p.data_0, 20, 30, 0, 359));
+              //sendColor(map(p.data_0, 20, 30, 0, 359));
               break;   
+            case MSG_ID::Farbtemperatur:
+              sendColor(map(p.data_0, 20, 30, 0, 359));
+              break;  
             }
         }
     }
@@ -98,7 +101,5 @@ void sendColor(int val)
   p.data_1 = val;
   p.data_2 = 250;
   p.data_3 = 100;
-
-    
   wc.sendData(p, 0xB00B1E5000LL);
 }

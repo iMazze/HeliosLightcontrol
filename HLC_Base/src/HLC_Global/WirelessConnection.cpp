@@ -20,12 +20,6 @@ void WirelessConnection::start()
     radio.setPALevel(RF24_PA_LOW); //Set power level to low, won't work well at higher levels (interfer with receiver)
     radio.openReadingPipe(1, m_id);      //open pipe o for recieving meassages with pipe address
     radio.startListening();                 // Start listening for messages
-
-
-  
-
-
-
 }
 
 

@@ -1,34 +1,49 @@
-#include "src/Sensoring.h"
+#include "Sensoring.h"
 
 Sensoring::Sensoring()
 {
 	dht1.begin();
+	mNumberOfPersons=0;
 }
 
-void Sensoring::sendTemperature()
+uint16_t Sensoring::sendTemperature()
 {
+	return (mTemperature);
 }
 
-void Sensoring::sendHumidity()
+uint16_t Sensoring::sendHumidity()
 {
+	return mHumidity;
 }
 
-void Sensoring::sendColorTemp()
+uint16_t Sensoring::sendColorTemp()
 {
+	return mColorTemp;
 }
 
-void Sensoring::sendLux()
+uint16_t Sensoring::sendLux()
 {
+	return mLux;
 }
 
-void Sensoring::sendRGB()
+uint16_t Sensoring::sendRed()
 {
+	return mRed;
 }
-void Sensoring::sendNumberOfPersons()
+uint16_t Sensoring::sendGreen()
 {
+	return mGreen;
+}
+uint16_t Sensoring::sendBlue()
+{
+	return mBlue;
+}
+uint16_t Sensoring::sendNumberOfPersons()
+{
+	return mNumberOfPersons;
 }
 
-bool Sensoring::accesControl()
+void Sensoring::accesControl()
 {
 	//sensor 1 outside, sensor 2 indoor
 	long time1 = 0;
@@ -36,51 +51,36 @@ bool Sensoring::accesControl()
 	//supersonicsensor 1
 	digitalWrite(trigger1, LOW);
 	delayMicroseconds(3);
-	noInterrupts();
+	//noInterrupts();
 	digitalWrite(trigger1, HIGH); //Trigger impuls 10 us
 	delayMicroseconds(10);
 	digitalWrite(trigger1, LOW); //falling flank
 	time1 = pulseIn(echo1, HIGH); //echotime1
-	interrupts();
+	//interrupts();
 	//supersonicsensor 2
 	digitalWrite(trigger2, LOW);
 	delayMicroseconds(3);
-	noInterrupts();
+	//noInterrupts();
 	digitalWrite(trigger2, HIGH); //Trigger impuls 10 us
 	delayMicroseconds(10);
 	digitalWrite(trigger2, LOW); //falling flank
 	time2 = pulseIn(echo2, HIGH); //echotime2
-	interrupts();
+	//interrupts();
 	//if distance of one sensor between doorframe (which is indicated through measured time)
 	//is shorter than the other one, someone is going through the door
 	//if outer sensor was shorter, someone went in
 	if (time1 < (time2 - 800)) //~10 cm tolerance
 	{
-		return true;
+		++mNumberOfPersons;
+		//delay(1000);
 	}
 	else if (time2 < (time1 - 800))
 	{
-		return false;
-	}
-	else
-	{
-		break;
-	}
-}
-
-void Sensoring::counter()
-{
-	//one more person went into the room
-	if (accesControl()==true)
-	{
-		++mNumberOfPersons;
-		delay(1000);
-	}
-	//one left the room
-	else if (accesControl()==false)
-	{
-		--mNumberOfPersons;
-		delay(1000);
+		if (mNumberOfPersons!=0)
+		{
+			--mNumberOfPersons;
+		}
+		//delay(1000);
 	}
 }
 
@@ -96,19 +96,11 @@ bool Sensoring::personLeft()
 	}
 }
 
-void Sensoring::setMeasuringRate(uint16_t r)
-{
-	mRate=r;
-}
-
 void Sensoring::measuring()
 {
 	measuringLight();
 	mHumidity = dht1.readHumidity();
 	mTemperature = dht1.readTemperature();
-
-	//delaytime out of measurement rate
-	delay(60000/mRate);
 }
 
 void Sensoring::measuringLight()
@@ -119,7 +111,7 @@ void Sensoring::measuringLight()
 	uint16_t blue;
 	//get abslout values from sensor
 	tcs.getRawData(&red, &green, &blue, &clear);
-	convertingRGB(&red, &green, &blue, &clear);
+	convertingRGB(red, green, blue, clear);
 	//calculating Lux
 	mLux = tcs.calculateLux(red, green, blue);
 	//calculating color temperature

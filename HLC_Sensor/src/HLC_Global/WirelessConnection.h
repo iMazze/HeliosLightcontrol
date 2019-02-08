@@ -20,6 +20,7 @@ enum MSG_ID
     Sensor_Lux = 14,
     Sensor_RGB = 15,
     Sensor_Doorsensor =16,
+
     Matrix_FFT_Show = 20,
     Matrix_Fullon = 21,
     Matrix_RGB = 22,

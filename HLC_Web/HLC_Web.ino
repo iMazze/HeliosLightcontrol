@@ -1,3 +1,15 @@
+/***************************************************************************************************************
+FILE: 
+PROJECT: HELIOSLIGHTCONTROL
+MODULE: 
+Description:
+
+
+Compiler dependencies or special instructions:
+
+REVISION HISTORY
+Date: By: Description:
+****************************************************************************************************************/
 #include <ESP8266WiFi.h>
 
 const char* ssid = "HLC-Web";

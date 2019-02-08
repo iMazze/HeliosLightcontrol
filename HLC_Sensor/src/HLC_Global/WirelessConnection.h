@@ -1,3 +1,15 @@
+/***************************************************************************************************************
+FILE: 
+PROJECT: HELIOSLIGHTCONTROL
+MODULE: 
+Description:
+
+
+Compiler dependencies or special instructions:
+
+REVISION HISTORY
+Date: By: Description:
+****************************************************************************************************************/
 #ifndef WIRELESSCONNECTION_H
 #define WIRELESSCONNECTION_H
 

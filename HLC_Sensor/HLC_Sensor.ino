@@ -1,4 +1,15 @@
+/***************************************************************************************************************
+FILE: 
+PROJECT: HELIOSLIGHTCONTROL
+MODULE: 
+Description:
 
+
+Compiler dependencies or special instructions:
+
+REVISION HISTORY
+Date: By: Description:
+****************************************************************************************************************/
 #include "src/HLC_Global/WirelessConnection.h"
 #include "src/HLC_Global/TimerOne.h"
 #include "src/HLC_Global/Debug.h"

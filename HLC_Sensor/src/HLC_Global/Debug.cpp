@@ -1,14 +1,17 @@
 /***************************************************************************************************************
-FILE: 
+FILE: Debug.cpp
 PROJECT: HELIOSLIGHTCONTROL
-MODULE: 
+MODULE: HLC_Sensor
 Description:
+    Debuging
 
 
 Compiler dependencies or special instructions:
 
 REVISION HISTORY
 Date: By: Description:
+08.02.2019: Maximilian Klug: Coding
+08.02.2019: Jonas Schellhorn: Header, etc.
 ****************************************************************************************************************/
 #include "Debug.h"
 

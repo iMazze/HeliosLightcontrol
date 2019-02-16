@@ -9,6 +9,7 @@ Compiler dependencies or special instructions:
 
 REVISION HISTORY
 Date: By: Description:
+08.02.2019: Jonas Schellhorn: Header, etc.
 ****************************************************************************************************************/
 #include "Sensoring.h"
 

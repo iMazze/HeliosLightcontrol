@@ -16,6 +16,13 @@ Date: By: Description:
 #include "src/HLC_Global/PackageBuffer.h"
 
 
+char buf[80];
+
+#include <SoftwareSerial.h>
+
+SoftwareSerial gtSerial(8, 7); // Arduino RX, Arduino TX
+
+
 const uint16_t timer_interval = 25; // 25ms
 uint32_t counter = 0;
 
@@ -26,16 +33,33 @@ WirelessConnection wc = WirelessConnection(radio_24, 0xA00B1E5000LL);
 Debug d = Debug(Serial, LED_BUILTIN);
 PackageBuffer pckBuff;
 
+// Lokale Werte
+enum Matrix_Mode {
+  unknown,
+  off,
+  beleuchtung,
+  farbenspiel,
+  fft,
+  zutrittskontrolle
+};
+
+
+boolean recievedData = false;
+Matrix_Mode matrixMode = zutrittskontrolle;
+
 // Initialisierung
 void setup()
 {
     Serial.begin(9600);
     d.log("Init Started");
-    d.toggleLed();
+    //d.toggleLed();
+
+    //Setup HW Serial 
+    gtSerial.begin(9600);  // software serial port
+
     
     // Setup RF24
     radio_24.begin();
-
 
     // Setup WirelessConnection
     wc.attachInterruptFunction(nrf_interrupt);
@@ -46,20 +70,19 @@ void setup()
     Timer1.attachInterrupt(timer_loop);
 
     d.log("Init Complete");
-    Package p;
-    p.id = MSG_ID::Matrix_FFT_Show;
-    p.data_0 = 1;
-    wc.sendData(p, 0xB00B1E5000LL);
+
+    // Make LED initially Off
+    matrixSetOff();
 };
 
 void nrf_interrupt()
 {
-    
+    recievedData = true;
     Package p = wc.getData();
     d.logPackage(p);
 
     // Adds the recieved package to the Buffer
-    pckBuff.addPackage(p);
+    pckBuff.overritePackage(p);
 }
 
 // Loop from Timer1
@@ -68,31 +91,42 @@ void timer_loop()
     // alle 25ms
     if(!(counter % 1))
     {
-        if(pckBuff.hasPackages())
-        {
-            Package p = pckBuff.returnFirstPackage();
-            switch (p.id)
-            {
-            case MSG_ID::Temperatur:
-              //sendColor(map(p.data_0, 20, 30, 0, 359));
-              break;   
-            case MSG_ID::Farbtemperatur:
-              sendColor(map(p.data_0, 20, 30, 0, 359));
-              break;  
-            }
+      if(pckBuff.hasPackages())
+      {
+        Package p = pckBuff.readLastPackage();
+        switch (p.id)
+        {  
+        case MSG_ID::Sensor_Doorsensor:
+          Serial.print("It was Doorsensor:");
+          Serial.println(p.data_0);
+          if(p.data_0 == 0)
+          {
+            matrixMode = off;
+          }
+          else
+          {
+            matrixMode = beleuchtung;
+          }
+          pckBuff.deleteLastRecieved();
+          break;
         }
+      }
     }
     // alle 250ms
     if(!(counter % 10))
     {
-        // Weil ich es kann!
-        d.toggleLed();
-        d.log("Blink");
+      if(recievedData)
+      {
+        recievedData = false;
+        handleNewRecieve();
+      }
     } 
     // alle 0.5s
     if(!(counter % 20))
     {
-        
+        // Weil ich es kann!
+        //d.toggleLed();
+        d.log("Blink");
     }
 
     // increment counter
@@ -100,18 +134,13 @@ void timer_loop()
 }
  
 // Main Loop
-void loop(){
-  
-    
-};
-
-void sendColor(int val)
+void loop()
 {
-  Package p;
-  p.id = MSG_ID::Matrix_HSV;
-  p.data_0 = 1;
-  p.data_1 = val;
-  p.data_2 = 250;
-  p.data_3 = 100;
-  wc.sendData(p, 0xB00B1E5000LL);
-}
+    // Handle Serial Input
+    noInterrupts();
+    if (readline(gtSerial.read(), buf, 80) > 0) 
+    {
+        handleSerialRecieve();
+    }
+    interrupts();
+};

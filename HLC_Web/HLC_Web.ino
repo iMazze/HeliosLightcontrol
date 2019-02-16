@@ -1,15 +1,3 @@
-/***************************************************************************************************************
-FILE: 
-PROJECT: HELIOSLIGHTCONTROL
-MODULE: 
-Description:
-
-
-Compiler dependencies or special instructions:
-
-REVISION HISTORY
-Date: By: Description:
-****************************************************************************************************************/
 #include <ESP8266WiFi.h>
 
 const char* ssid = "HLC-Web";
@@ -137,7 +125,7 @@ void loop()
     if(iEqu>=0)
     {
       sCmd = sParam.substring(iEqu+1,sParam.length());
-      Serial.println("anfang:"+sCmd+"ende");
+      Serial.println(sCmd);
     }
   }
 
@@ -178,8 +166,8 @@ void loop()
     sResponse += "Funktion 1 schaltet GPIO2 und erzeugt eine serielle Ausgabe.<BR>";
     sResponse += "Funktion 2 erzeugt nur eine serielle Ausgabe.<BR>";
     sResponse += "<FONT SIZE=+1>";
-    sResponse += "<p>Funktion 1 <a href=\"?pin=FUNCTION1ON\"><button>einschalten</button></a>&nbsp;<a href=\"?pin=FUNCTION1OFF\"><button>ausschalten</button></a></p>";
-    sResponse += "<p>Funktion 2 <a href=\"?pin=FUNCTION2ON\"><button>einschalten</button></a>&nbsp;<a href=\"?pin=FUNCTION2OFF\"><button>ausschalten</button></a></p>";
+    sResponse += "<p>Funktion FFT <a href=\"?pin=FUNCTION1ON\"><button>einschalten</button></a>&nbsp;<a href=\"?pin=FUNCTION1OFF\"><button>ausschalten</button></a></p>";
+    sResponse += "<p>Funktion COLOR <a href=\"?pin=FUNCTION2ON\"><button>einschalten</button></a>&nbsp;<a href=\"?pin=FUNCTION2OFF\"><button>ausschalten</button></a></p>";
     
     //////////////////////
     // react on parameters

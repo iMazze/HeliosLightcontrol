@@ -64,12 +64,12 @@ void Sensoring::accesControl()
 	//supersonicsensor 1
 	digitalWrite(trigger1, LOW);
 	delayMicroseconds(3);
-	//noInterrupts();
+	noInterrupts();
 	digitalWrite(trigger1, HIGH); //Trigger impuls 10 us
 	delayMicroseconds(10);
 	digitalWrite(trigger1, LOW); //falling flank
 	time1 = pulseIn(echo1, HIGH); //echotime1
-	//interrupts();
+	interrupts();
 	//supersonicsensor 2
 	digitalWrite(trigger2, LOW);
 	delayMicroseconds(3);
@@ -112,8 +112,8 @@ bool Sensoring::personLeft()
 void Sensoring::measuring()
 {
 	measuringLight();
-	mHumidity = dht1.readHumidity();
-	mTemperature = dht1.readTemperature();
+	mHumidity = (uint16_t) dht1.readHumidity();
+	mTemperature = (uint16_t)dht1.readTemperature();
 }
 
 void Sensoring::measuringLight()

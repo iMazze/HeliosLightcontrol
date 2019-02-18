@@ -21,7 +21,7 @@ Date: By: Description:
 #include "src/Sensoring.h"
 
 
-//const uint16_t timer_interval = 25; // 25ms
+const uint16_t timer_interval = 50; // 50ms
 uint32_t counter = 0;
 
 RF24 radio_24(9,10);
@@ -31,6 +31,8 @@ Sensoring Sensors;
 
 uint16_t NumberOfPersonsOld = 0;
 bool restarted = true;
+bool t_50ms = false;
+bool t_2000ms = false;
 
 
 void setup() {
@@ -41,11 +43,9 @@ void setup() {
   wc.start();
 
   // Setup Timer
-  // Timer1.initialize(timer_interval*1000);
-  // Timer1.attachInterrupt(timer_loop);
-
+  Timer1.initialize(timer_interval*1000);
+  Timer1.attachInterrupt(timer_loop);
   
-
   Serial.begin(9600);
   Serial.println ("Ende Setup");
 }
@@ -53,58 +53,78 @@ void setup() {
 // Loop from Timer1
 void timer_loop() 
 {
-    
+ // alle 50ms
+    if(!(counter % 1))
+    {
+        t_50ms = true;
+    }
+    // alle 2000ms
+    if(!(counter % 40))
+    {
+        t_2000ms = true;
+    }
+    if(!(counter%100))
+    {
+        Package Persons; //Package with number of persons which are actual inside the room
+        Persons.id = MSG_ID::Sensor_Doorsensor;
+        Persons.data_0 = random(0,3);
+        Persons.data_1 = 0;
+        Persons.data_2 = 0;
+        Persons.data_3 = 0;
+        //NumberOfPersonsOld = tNumber;
+        wc.sendData(Persons, 0xA00B1E5000LL);
+    }
+    counter++;   
 }
 
 // mainloop
 void loop() {
   // put your main code here, to run repeatedly:
+ //Serial.println("");
  //Serial.println("Main");
-// alle 25ms
-    if(!(counter % 1))
-    {
-        //Code, der alle 25 ms ausgeführt werden soll
-    }
+ //Serial.println(dht2.readHumidity());
+
     // alle 50ms
-    if(!(counter % 2))
+    if(t_50ms == true)
     {
-         //Durchlaufen der Abstandsmessung zwischen den Türrahmen, um ein- bzw herausgehende Personen zu erkennen
-        //  Sensors.accesControl();
-        //  uint16_t tNumber = Sensors.sendNumberOfPersons();
-        //  if (NumberOfPersonsOld != tNumber || restarted == true)
-        //  {
-        //   noInterrupts();
-        //      Serial.println ("Number:");
-        //      Serial.println (tNumber);
+       restarted=false;
+       
+       //Durchlaufen der Abstandsmessung zwischen den Türrahmen, um ein- bzw herausgehende Personen zu erkennen
+       //Sensors.accesControl();
+       //uint16_t tNumber = Sensors.sendNumberOfPersons();
+       //Serial.println(tNumber);
+       //if (NumberOfPersonsOld != tNumber || restarted == true)
+       //{
+       //   Serial.println ("Number:");
+       //   Serial.println (tNumber);
         //      Package Persons; //Package with number of persons which are actual inside the room
         //      Persons.id = MSG_ID::Sensor_Doorsensor;
         //      Persons.data_0 = tNumber;
         //      Persons.data_1 = 0;
         //      Persons.data_2 = 0;
         //      Persons.data_3 = 0;
-        //      NumberOfPersonsOld = tNumber;
+        //  NumberOfPersonsOld = tNumber;
         //      wc.sendData(Persons, 0xA00B1E5000LL);
-        //      delay(1000);
-        //   interrupts();
-        //  }
-        //  restarted=false;
-
+        //t_50ms=false;
+        //  delay(1000);
+       //
     }
-    // alle 250ms
-    if(!(counter % 10))
-    {
-    } 
-    // alle 0.5s
-    if(!(counter % 20))
-    {
 
-    }
-    // alle 1s
-    if(!(counter % 40))
+    // alle 2s
+    if(t_2000ms == true)
     {
         Serial.println("");
-        Serial.println("Sensordaten");
+        Serial.println("Sensordaten 1000ms");
+        //Serial.println(dht2.readTemperature());
+        //Serial.println(dht2.readHumidity());
         Sensors.measuring();
+        Serial.println("Temp");
+        Serial.println(Sensors.sendTemperature());
+        //Serial.println(Sensors.sendHumidity());
+        //Serial.println("Lux");
+        //Serial.println(Sensors.sendLux());
+        Serial.println("ColorTemp");
+        Serial.println(Sensors.sendColorTemp());
         Package temp; // Package with temperaturvalue
         temp.id = MSG_ID::Sensor_Temperature;
         temp.data_0 = Sensors.sendTemperature();
@@ -115,7 +135,7 @@ void loop() {
         wc.sendData(temp, 0xA00B1E5000LL);
         delay(10);
 
-        Package hum; //Package with humdityvalue
+        Package hum; //Package with humidityvalue
         hum.id = MSG_ID::Sensor_Humidity;
         hum.data_0 = Sensors.sendHumidity();
         hum.data_1 = 0;
@@ -154,9 +174,11 @@ void loop() {
 
         wc.sendData(RGB, 0xA00B1E5000LL);
         delay(10);
-        delay (1000);
+        // delay (1000);
+        t_2000ms = false;
+        delay (100);
     }
 
     // increment counter
-    counter++;
+ //delay(1000);
 };

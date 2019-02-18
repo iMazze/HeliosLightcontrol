@@ -23,7 +23,7 @@
 
 ## Dependencies
 | Tables            |      Name of Lib              |  Website                                                              | Folder |
-|-------------------|:-------------:                |------:                                                                | ------:|
+|-------------------|:-------------                 |------                                                                 | ------|
 | HLC_Base          |                               |                                                                       |  |
 | HLC_Lamp          |                               |                                                                       |  | 
 | HLC_LED_Matrix    |                               |  https://github.com/adafruit/Adafruit-GFX-Library/archive/master.zip  | Arduino/libraries |

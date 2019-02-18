@@ -1,3 +1,18 @@
+/***************************************************************************************************************
+FILE: HLC_Web.ino
+PROJECT: HELIOSLIGHTCONTROL
+MODULE: ESP 01 for Webinterfacing
+Description: Its the Main File of the Web Moduke which sends Data to the Base Station
+
+
+Compiler dependencies or special instructions:
+
+REVISION HISTORY
+Date: By: Description:
+18.02.2019: Maximilian Klug: First Commit
+
+****************************************************************************************************************/
+
 #include <ESP8266WiFi.h>
 
 const char* ssid = "HLC-Web";

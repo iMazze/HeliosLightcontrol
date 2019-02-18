@@ -1,14 +1,16 @@
 /***************************************************************************************************************
-FILE: 
+FILE: HLC_LED_Matrix.ino
 PROJECT: HELIOSLIGHTCONTROL
-MODULE: 
-Description:
+MODULE: Led Matrix
+Description: Its the Main File of the LED Matrix
 
 
 Compiler dependencies or special instructions:
 
 REVISION HISTORY
 Date: By: Description:
+18.02.2019: Maximilian Klug: First Commit
+
 ****************************************************************************************************************/
 #include "src/HLC_Global/WirelessConnection.h"
 #include "src/HLC_Global/TimerOne.h"

@@ -1,14 +1,15 @@
 /***************************************************************************************************************
-FILE: 
+FILE: HLC_Base.ino
 PROJECT: HELIOSLIGHTCONTROL
-MODULE: 
-Description:
+MODULE: Base Module
+Description: Main File of Base Module
 
 
 Compiler dependencies or special instructions:
 
 REVISION HISTORY
 Date: By: Description:
+18.02.2019: Maximilian Klug: First Commit
 ****************************************************************************************************************/
 #include "src/HLC_Global/WirelessConnection.h"
 #include "src/HLC_Global/TimerOne.h"

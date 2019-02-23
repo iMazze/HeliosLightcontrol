@@ -42,7 +42,9 @@ enum MSG_ID
     Matrix_Fullon = 21,
     Matrix_RGB = 22,
     Matrix_HSV = 23,
-    Matrix_HEX = 24
+    Matrix_HEX = 24,
+    Matrix_AddTempValue = 25,
+    Matrix_Tempchart_Show = 26
 };
 
 // The define List with all device IDs

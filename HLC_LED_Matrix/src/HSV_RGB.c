@@ -1,22 +1,25 @@
 /***************************************************************************************************************
-FILE: 
+FILE: HSV_RGB.c
 PROJECT: HELIOSLIGHTCONTROL
-MODULE: 
-Description:
+MODULE: HLC_LED_Matrix
+Description: Is a HSV to RGB conversion function.
 
 
 Compiler dependencies or special instructions:
+- Arduino.h
 
 REVISION HISTORY
 Date: By: Description:
+23.02.19: Maximilian Klug: Made last comments
 ****************************************************************************************************************/
-#include "Arduino.h"
-//   void HSV_to_RGB(
-//     unsigned int inHue, unsigned int inSaturation, unsigned int inBrightness,
-//     unsigned int *oR, unsigned int *oG, unsigned int *oB )...
+#ifndef HSVRGB_C
+#define HSVRGB_C
 
+#include "Arduino.h"
+
+// Converts the hsv to rgb value.
 void HSV_to_RGB(uint16_t hue, int sat, int val, uint8_t* r_, uint8_t* g_, uint8_t*b_) 
-	{
+{
         int colors[3];
 	// hue: 0-359, sat: 0-255, val (lightness): 0-255
 	int r, g, b, base;
@@ -71,3 +74,5 @@ void HSV_to_RGB(uint16_t hue, int sat, int val, uint8_t* r_, uint8_t* g_, uint8_
         *g_ = colors[1];
         *b_ = colors[2];
 	}
+
+#endif

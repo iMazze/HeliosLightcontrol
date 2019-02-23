@@ -1,15 +1,21 @@
 /***************************************************************************************************************
-FILE: 
+FILE: Debug.h
 PROJECT: HELIOSLIGHTCONTROL
-MODULE: 
-Description:
+MODULE: HLC_Global
+Description: Class for communicate debug messages to the user trough the console or the debug led.
 
 
 Compiler dependencies or special instructions:
+- WirelessConnection.h
+- Arduino.h
 
 REVISION HISTORY
 Date: By: Description:
+23.02.19: Maximilian Klug: Made last comments
 ****************************************************************************************************************/
+#ifndef DEBUG_H
+#define DEBUG_H
+
 #include <Arduino.h>
 #include "WirelessConnection.h"
 
@@ -28,3 +34,5 @@ class Debug
         int m_led;
         Print* printer;
 };
+
+#endif

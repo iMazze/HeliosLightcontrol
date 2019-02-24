@@ -31,7 +31,7 @@ uint16_t Sensoring::sendHumidity()
 
 uint16_t Sensoring::sendColorTemp()
 {
-	return mColorTemp;
+	return mColorTemperature;
 }
 
 uint16_t Sensoring::sendLux()
@@ -73,19 +73,20 @@ void Sensoring::accesControl()
 	//supersonicsensor 2
 	digitalWrite(trigger2, LOW);
 	delayMicroseconds(3);
-	//noInterrupts();
+	noInterrupts();
 	digitalWrite(trigger2, HIGH); //Trigger impuls 10 us
 	delayMicroseconds(10);
 	digitalWrite(trigger2, LOW); //falling flank
 	time2 = pulseIn(echo2, HIGH); //echotime2
-	//interrupts();
+	interrupts();
 	//if distance of one sensor between doorframe (which is indicated through measured time)
 	//is shorter than the other one, someone is going through the door
 	//if outer sensor was shorter, someone went in
+	Serial.println(time1);
+	Serial.println(time2);
 	if (time1 < (time2 - 800)) //~10 cm tolerance
 	{
 		++mNumberOfPersons;
-		//delay(1000);
 	}
 	else if (time2 < (time1 - 800))
 	{
@@ -93,7 +94,6 @@ void Sensoring::accesControl()
 		{
 			--mNumberOfPersons;
 		}
-		//delay(1000);
 	}
 }
 
@@ -128,7 +128,7 @@ void Sensoring::measuringLight()
 	//calculating Lux
 	mLux = tcs.calculateLux(red, green, blue);
 	//calculating color temperature
-	mColorTemp = tcs.calculateColorTemperature(red, green, blue);
+	mColorTemperature = tcs.calculateColorTemperature(red, green, blue);
 }
 
 void Sensoring::convertingRGB(uint16_t red, uint16_t green, uint16_t blue, uint16_t clear)
@@ -140,5 +140,5 @@ void Sensoring::convertingRGB(uint16_t red, uint16_t green, uint16_t blue, uint1
 	g = green; g /= sum;
 	b = blue; b /= sum;
 	r *= 255; g *= 255; b *= 255;
-	mRed = r; mGreen = g; mBlue = b; 
+	mRed = (uint8_t)r; mGreen = (uint8_t)g; mBlue = (uint8_t)b; 
 }

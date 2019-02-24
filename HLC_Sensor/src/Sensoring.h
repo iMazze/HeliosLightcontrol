@@ -56,12 +56,12 @@ private:
 
 	//variables
 	//Measuring data
-	uint16_t mRed; //0..255
-	uint16_t mGreen; //0..255
-	uint16_t mBlue; //0..255
+	uint8_t mRed; //0..255
+	uint8_t mGreen; //0..255
+	uint8_t mBlue; //0..255
 	uint16_t mTemperature;
 	uint16_t mHumidity;
-	uint16_t mColorTemp;
+	uint16_t mColorTemperature;
 	uint16_t mLux;
 	uint16_t mNumberOfPersons;
 

@@ -63,7 +63,7 @@ void loop()
           Persons.data_2 = 0;
           Persons.data_3 = 0;
           NumberOfPersonsOld = tNumber;
-          wc.sendData(Persons, 0xA00B1E5000LL);
+          wc.sendData(Persons, ID_HLC_BASE);
           delay(1000);
        }
     }
@@ -80,6 +80,7 @@ void loop()
         //Serial.println(Sensors.sendLux());
         //Serial.println("ColorTemp");
         //Serial.println(Sensors.sendColorTemp());
+        
         Package temp; // Package with temperaturvalue
         temp.id = MSG_ID::Sensor_Temperature;
         temp.data_0 = Sensors.sendTemperature();
@@ -87,7 +88,7 @@ void loop()
         temp.data_2 = 0;
         temp.data_3 = 0;
 
-        wc.sendData(temp, 0xA00B1E5000LL);
+        wc.sendData(temp, ID_HLC_BASE);
         delay(10);
 
         Package hum; //Package with humidityvalue
@@ -97,7 +98,7 @@ void loop()
         hum.data_2 = 0;
         hum.data_3 = 0;
 
-        wc.sendData(hum, 0xA00B1E5000LL);
+        wc.sendData(hum, ID_HLC_BASE);
         delay(10);
 
         Package colortemp; //Package with colortemperature
@@ -107,9 +108,9 @@ void loop()
         colortemp.data_2 = 0;
         colortemp.data_3 = 0;
 
-        wc.sendData(colortemp, 0xA00B1E5000LL);
+        wc.sendData(colortemp, ID_HLC_BASE);
         delay(10);
-        wc.sendData(colortemp, 0xE00B1E5000LL);
+        wc.sendData(colortemp, ID_HLC_LAMP);
         delay(10);
 
         Package lux; //Package with 
@@ -119,7 +120,7 @@ void loop()
         lux.data_2 = 0;
         lux.data_3 = 0;
 
-        wc.sendData(lux, 0xA00B1E5000LL);
+        wc.sendData(lux, ID_HLC_BASE);
         delay(10);
 
         Package RGB; //Package with all RGB values of light
@@ -129,7 +130,7 @@ void loop()
         RGB.data_2 = Sensors.sendBlue();
         RGB.data_3 = 0;
 
-        wc.sendData(RGB, 0xA00B1E5000LL);
+        wc.sendData(RGB, ID_HLC_BASE);
         delay(10);
         // delay (1000);
         //reset counter

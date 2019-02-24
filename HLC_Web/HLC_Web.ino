@@ -12,7 +12,6 @@ Date: By: Description:
 18.02.2019: Maximilian Klug: First Commit
 
 ****************************************************************************************************************/
-
 #include <ESP8266WiFi.h>
 
 const char* ssid = "HLC-Web";

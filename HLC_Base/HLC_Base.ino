@@ -4,34 +4,44 @@ PROJECT: HELIOSLIGHTCONTROL
 MODULE: Base Module
 Description: Main File of Base Module
 
-
 Compiler dependencies or special instructions:
+- WirelessConnection.h
+- TimerOne.h
+- Debug.h
+- PackageBuffer.h
+- SoftwareSerial.h
 
 REVISION HISTORY
 Date: By: Description:
-18.02.2019: Maximilian Klug: First Commit
+18.02.19: Maximilian Klug: First Commit
+23.02.19: Maximilian Klug: Made last comments
 ****************************************************************************************************************/
 #include "src/HLC_Global/WirelessConnection.h"
 #include "src/HLC_Global/TimerOne.h"
 #include "src/HLC_Global/Debug.h"
 #include "src/HLC_Global/PackageBuffer.h"
-
-
-char buf[80];
-
 #include <SoftwareSerial.h>
 
+// Buffer for recieving serial Data from the HLC_Web
+char buf[80];
+
+// Software Serial interface for HLC_Web
 SoftwareSerial gtSerial(8, 7); // Arduino RX, Arduino TX
 
-
+// Timer Intervall for Interrupt
 const uint16_t timer_interval = 25; // 25ms
+
+// Counter for dividing timer
 uint32_t counter = 0;
 
-
+// Radio Interface
 RF24 radio_24(9,10);
 
-WirelessConnection wc = WirelessConnection(radio_24, 0xA00B1E5000LL);
+WirelessConnection wc = WirelessConnection(radio_24, ID_HLC_BASE);
+
 Debug d = Debug(Serial, LED_BUILTIN);
+
+// Instance of the buffer
 PackageBuffer pckBuff;
 
 // Lokale Werte
@@ -48,16 +58,17 @@ enum Matrix_Mode {
 boolean recievedData = false;
 Matrix_Mode matrixMode = zutrittskontrolle;
 
-// Initialisierung
+/*========================================================================*/
+/*                          Initializing                                  */
+/*========================================================================*/
 void setup()
 {
+    // Setup HW Serial
     Serial.begin(9600);
     d.log("Init Started");
-    //d.toggleLed();
 
-    //Setup HW Serial 
+    //Setup SW Serial 
     gtSerial.begin(9600);  // software serial port
-
     
     // Setup RF24
     radio_24.begin();
@@ -76,6 +87,7 @@ void setup()
     matrixSetOff();
 };
 
+// Interrupt function for recieving package data
 void nrf_interrupt()
 {
     recievedData = true;
@@ -86,7 +98,9 @@ void nrf_interrupt()
     pckBuff.overritePackage(p);
 }
 
-// Loop from Timer1
+/*========================================================================*/
+/*                            Timer Loop                                  */
+/*========================================================================*/
 void timer_loop() 
 {
     // alle 25ms
@@ -125,23 +139,27 @@ void timer_loop()
     // alle 0.5s
     if(!(counter % 20))
     {
-        // Weil ich es kann!
-        //d.toggleLed();
-        d.log("Blink");
+        // alive information
+        d.log("iam still alive");
     }
 
     // increment counter
     counter++;
 }
  
-// Main Loop
+/*========================================================================*/
+/*                            Main Loop                                   */
+/*========================================================================*/
 void loop()
 {
-    // Handle Serial Input
+    // Handle Serial Input recieved from HLC_Web
+    // Deactivate Interrupts
     noInterrupts();
     if (readline(gtSerial.read(), buf, 80) > 0) 
     {
         handleSerialRecieve();
     }
+
+    // Activate Interrupts
     interrupts();
 };

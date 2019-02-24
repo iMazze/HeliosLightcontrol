@@ -1,7 +1,4 @@
-/*******************************************************
-XXX
-********************************************************/
-
+// Handles the Serial input from the HLC_Web
 void handleSerialRecieve()
 {
     if(StrContains(buf, "FUNCTION2ON"))
@@ -18,17 +15,18 @@ void handleSerialRecieve()
       Package p;
       p.id = MSG_ID::Matrix_FFT_Show;
       p.data_0 = 1;
-      wc.sendData(p, 0xB00B1E5000LL);
+      wc.sendData(p, ID_HLC_MATRIX);
     }
     else if(StrContains(buf, "FUNCTION1OFF"))
     {
       Package p;
       p.id = MSG_ID::Matrix_FFT_Show;
       p.data_0 = 0;
-      wc.sendData(p, 0xB00B1E5000LL);
+      wc.sendData(p, ID_HLC_MATRIX);
     }
 }
 
+// Reads one line from the buffer
 int readline(int readch, char *buffer, int len) {
     static int pos = 0;
     int rpos;

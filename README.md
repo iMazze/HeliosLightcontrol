@@ -23,12 +23,13 @@
 
 ## Dependencies
 | Tables            |      Name of Lib              |  Website                                                              | Folder |
-|-------------------|:-------------                 | ------                                                                 | ------|
-| HLC_Base          |                               |                                                                       |  |
-| HLC_Lamp          |                               |                                                                       |  | 
-| HLC_LED_Matrix    | Adafruit-GFX-Library          |  https://github.com/adafruit/Adafruit-GFX-Library/archive/master.zip  | Arduino/libraries |
-|                   | Adafruit_NeoMatrix            |  https://github.com/adafruit/Adafruit_NeoMatrix/archive/master.zip    | Arduino/libraries |
-|                   | Adafruit_NeoPixel             |  https://github.com/adafruit/Adafruit_NeoPixel/archive/master.zip     | Arduino/libraries |
-| HLC_Sensor        | Adafruit DHT-sensor-library   |  https://github.com/adafruit/DHT-sensor-library                       | Arduino/libraries |
-|                   | Adafruit sensor library       |  https://github.com/adafruit/Adafruit_Sensor                          | Arduino/libraries |
-|                   | Adafruit_TCS34725.h           |  https://github.com/adafruit/Adafruit_TCS34725                        | ../src/Adafruit_TCS34725.h |
+|-------------------|:-------------                 | ------                                                                | ------|
+| HLC_Base          |                               |                                                                       |                           |
+| HLC_Lamp          |                               |                                                                       |                           | 
+| HLC_LED_Matrix    | Adafruit-GFX-Library          |  https://github.com/adafruit/Adafruit-GFX-Library/archive/master.zip  | Arduino/libraries         |
+|                   | Adafruit_NeoMatrix            |  https://github.com/adafruit/Adafruit_NeoMatrix/archive/master.zip    | Arduino/libraries         |
+|                   | Adafruit_NeoPixel             |  https://github.com/adafruit/Adafruit_NeoPixel/archive/master.zip     | Arduino/libraries         |
+|                   | ArduinoFFT.h                  |  https://github.com/kosme/arduinoFFT                                  | ../src/FFT/arduinoFFT.h   |
+| HLC_Sensor        | Adafruit DHT-sensor-library   |  https://github.com/adafruit/DHT-sensor-library                       | Arduino/libraries         |
+|                   | Adafruit sensor library       |  https://github.com/adafruit/Adafruit_Sensor                          | Arduino/libraries         |
+|                   | Adafruit_TCS34725.h           |  https://github.com/adafruit/Adafruit_TCS34725                        | ../src/Adafruit_TCS34725.h|

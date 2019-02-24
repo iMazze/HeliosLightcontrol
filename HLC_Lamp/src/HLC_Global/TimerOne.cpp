@@ -1,15 +1,14 @@
 /***************************************************************************************************************
-FILE: TimerOne.cpp
+FILE: 
 PROJECT: HELIOSLIGHTCONTROL
-MODULE: HLC_Global
-Description: There are the most functions for setting and working with Atmega328s Timer one.
+MODULE: 
+Description:
 
 
 Compiler dependencies or special instructions:
 
 REVISION HISTORY
 Date: By: Description:
-23.02.19: Maximilian Klug: Made last comments
 ****************************************************************************************************************/
 #include "TimerOne.h"
 

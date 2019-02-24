@@ -48,7 +48,7 @@ void matrixSetOff()
   Package p;
   p.id = MSG_ID::Matrix_RGB;
   p.data_0 = 0;
-  wc.sendData(p, 0xB00B1E5000LL);
+  wc.sendData(p, ID_HLC_MATRIX);
 }
 
 void sendHSV(int val)
@@ -59,29 +59,30 @@ void sendHSV(int val)
   p.data_1 = val;
   p.data_2 = 250;
   p.data_3 = 100;
-  wc.sendData(p, 0xB00B1E5000LL);
+  wc.sendData(p, ID_HLC_MATRIX);
 }
 
 void sendHEX(unsigned long rgb)
 {  
-  int red, green,blue;
-  red = rgb >> 16 ;
+//   int red, green,blue;
+//   red = rgb >> 16 ;
   
-  green = (rgb & 0x00ff00) >> 8;
+//   green = (rgb & 0x00ff00) >> 8;
   
-  blue = (rgb & 0x0000ff);
+//   blue = (rgb & 0x0000ff);
   
-  rgb = 0;
+//   rgb = 0;
   
-  rgb |= red <<16;
-  rgb |= blue <<8;
-  rgb |=green;
+//   rgb |= red <<16;
+//   rgb |= blue <<8;
+//   rgb |=green;
   
   Package p;
-  p.id = MSG_ID::Matrix_RGB;
+  p.id = MSG_ID::Matrix_HEX;
   p.data_0 = 1;
-  p.data_1 = red*0.2f;
-  p.data_2 = green*0.2f;
-  p.data_3 = blue*0.2f;
-  wc.sendData(p, 0xB00B1E5000LL);
+//   p.data_1 = red*0.2f;
+//   p.data_2 = green*0.2f;
+//   p.data_3 = blue*0.2f;
+    p.data_1 = rgb;
+  wc.sendData(p, ID_HLC_MATRIX);
 }

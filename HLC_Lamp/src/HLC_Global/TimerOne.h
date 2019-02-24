@@ -1,19 +1,15 @@
 /***************************************************************************************************************
-FILE: TimerOne.h
+FILE: 
 PROJECT: HELIOSLIGHTCONTROL
-MODULE: HLC_Global
-Description: There are the most functions for setting and working with Atmega328s Timer one.
+MODULE: 
+Description:
 
 
 Compiler dependencies or special instructions:
 
 REVISION HISTORY
 Date: By: Description:
-23.02.19: Maximilian Klug: Made last comments
 ****************************************************************************************************************/
-#ifndef TIMERONE_H
-#define TIMERONE_H
-
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
@@ -42,5 +38,3 @@ class TimerOne
 };
 
 extern TimerOne Timer1;
-
-#endif

@@ -1,40 +1,46 @@
 /***************************************************************************************************************
-FILE: 
+FILE: LedMatrix.cpp
 PROJECT: HELIOSLIGHTCONTROL
-MODULE: 
-Description:
-
+MODULE: HLC_LED_Matrix
+Description: There are all functions round about the led matrix
 
 Compiler dependencies or special instructions:
+- HSV_RGB.c
+- arduinoFFT.h
+- Adafruit_GFX.h
+- Adafruit_NeoMatrix.h
+- Adafruit_NeoPixel.h
 
 REVISION HISTORY
 Date: By: Description:
+18.02.2019: Maximilian Klug: First Commit
+23.02.19: Maximilian Klug: Made last comments
 ****************************************************************************************************************/
 #include "LedMatrix.h"
 #include "HSV_RGB.c"
-
-
-
         
+// Constructor of LedMatrix        
 LedMatrix::LedMatrix()
 {
     matrix.begin();
 
-    // FFT    
+    // Setups the FFT    
     sampling_period_us = round(1500000*(1.0/SAMPLING_FREQUENCY));
 }
 
+// Initializes the LedMatrix
 void LedMatrix::init()
 {
     //matrix.fillScreen(matrix.Color(15, 0, 0));
-    printColorWheel();
-    matrix.show();
+    //printColorWheel();
+    //matrix.show();
 
-    delay(2000);
+    //delay(2000);
     matrix.fillScreen(0);
     matrix.show();
 }
 
+// Some demoshit
 void LedMatrix::printColorWheel()
 {
     int      x, y, hue;
@@ -78,6 +84,8 @@ void LedMatrix::printColorWheel()
     }
     
 }
+
+// Does an rendering of the FFT
 void LedMatrix::doFFT()
 {
     /*SAMPLING*/
@@ -115,10 +123,9 @@ void LedMatrix::doFFT()
         }
         cnt++;
     }
- 
+
+    // Print calculated values to the matrix
     matrix.fillScreen(0);
-  
-  
     for(int i=0; i<17; i++)
     {
         printBar(i-1, (float)arr[i]/3000.0*15.0);
@@ -128,6 +135,7 @@ void LedMatrix::doFFT()
 
 }
 
+// Prints one Bar on the Matrix
 void LedMatrix::printBar(int frequenz, int amplitude)
 {
     for(int i = 0; i < amplitude; i++)
@@ -140,6 +148,7 @@ void LedMatrix::printBar(int frequenz, int amplitude)
     }
 }
 
+// Sets the matrix to full on mode
 void LedMatrix::fullOn()
 {
     matrix.fillScreen(0);
@@ -151,6 +160,8 @@ void LedMatrix::fullOn()
     matrix.fillScreen(0);
     matrix.show();
 }
+
+// Sets the matrix full off
 void LedMatrix::fullOff()
 {
     delay(500);
@@ -159,25 +170,42 @@ void LedMatrix::fullOff()
     delay(50);
 }
 
+// Sets the whole matrix to a specific rgb value
 void LedMatrix::setRGB(uint8_t r, uint8_t g, uint8_t b)
 {
     matrix.fillScreen(0);
     matrix.fillScreen(matrix.Color(r, g, b));
     matrix.show();
-
 }
+
+// Sets the whole matrix to a specific hex value
+void LedMatrix::setHEX(unsigned long rgb)
+{
+    // Makes a conversation from hex to rgb
+    int red, green,blue;
+    red = rgb >> 16 ;
+    
+    green = (rgb & 0x00ff00) >> 8;
+    
+    blue = (rgb & 0x0000ff);
+    
+    rgb = 0;
+    
+    rgb |= red <<16;
+    rgb |= blue <<8;
+    rgb |=green;
+
+
+    setRGB(red, green, blue);
+}
+
+// Sets the whole matrix to a specific hsv value
 void LedMatrix::setHSV(uint16_t h, uint8_t s, uint8_t v)
 {
     uint8_t r,g,b;
+
     // Calc HSV
     HSV_to_RGB(h, s, v, &r, &g, &b);
 
-
-    Serial.println(r);
-    Serial.println(g);
-    Serial.println(b);
-
-    matrix.fillScreen(0);
-    matrix.fillScreen(matrix.Color(r, g, b));
-    matrix.show();
+    setRGB(r,g,b);
 }

@@ -1,28 +1,31 @@
 // Handles the Serial input from the HLC_Web
 void handleSerialRecieve()
 {
-    if(StrContains(buf, "FUNCTION2ON"))
+    Serial.print("Rcieved from HLC_Web: ");
+    Serial.println(buf);
+    if(StrContains(buf, "matrix_OFF") || StrContains(buf, "matrix_fft_OFF") || StrContains(buf, "matrix_temperaturverlauf_OFF") || StrContains(buf, "matrix_beleuchtungNachTemperatur_OFF"))
     {
-      Serial.println("ON");
-      sendHSV(0);
+        matrixMode = off;
     }
-    else if(StrContains(buf, "FUNCTION2OFF"))
+    else if(StrContains(buf, "matrix_fft_ON"))
     {
-      sendHSV(150);
+      matrixMode = fft;
     }
-    else if(StrContains(buf, "FUNCTION1ON"))
+    else if(StrContains(buf, "matrix_temperaturverlauf_ON"))
     {
-      Package p;
-      p.id = MSG_ID::Matrix_FFT_Show;
-      p.data_0 = 1;
-      wc.sendData(p, ID_HLC_MATRIX);
+        matrixMode = temperaturverlauf;
     }
-    else if(StrContains(buf, "FUNCTION1OFF"))
+    else if(StrContains(buf, "matrix_beleuchtungNachTemperatur_ON"))
     {
-      Package p;
-      p.id = MSG_ID::Matrix_FFT_Show;
-      p.data_0 = 0;
-      wc.sendData(p, ID_HLC_MATRIX);
+        matrixMode = beleuchtungNachTemperatur;
+    }
+    else if(StrContains(buf, "lamp_ON"))
+    {
+        lampOn = true;
+    }
+    else if(StrContains(buf, "lamp_OFF"))
+    {
+        lampOn = false;
     }
 }
 

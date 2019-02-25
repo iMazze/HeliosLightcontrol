@@ -46,17 +46,17 @@ PackageBuffer pckBuff;
 
 // Lokale Werte
 enum Matrix_Mode {
-  unknown,
   off,
-  beleuchtung,
-  farbenspiel,
   fft,
-  zutrittskontrolle
+  beleuchtungNachTemperatur,
+  temperaturverlauf
 };
 
-
 boolean recievedData = false;
-Matrix_Mode matrixMode = zutrittskontrolle;
+Matrix_Mode matrixMode = off;
+
+boolean isRoomEmpty = true;
+boolean lampOn = false;
 
 /*========================================================================*/
 /*                          Initializing                                  */
@@ -112,35 +112,48 @@ void timer_loop()
         switch (p.id)
         {  
         case MSG_ID::Sensor_Doorsensor:
-          Serial.print("It was Doorsensor:");
-          Serial.println(p.data_0);
-          if(p.data_0 == 0)
-          {
-            matrixMode = off;
-          }
-          else
-          {
-            matrixMode = beleuchtung;
-          }
-          pckBuff.deleteLastRecieved();
-          break;
+            Serial.print("It was Doorsensor: ");
+            Serial.println(p.data_0);
+            if(p.data_0 == 0)
+            {
+                isRoomEmpty = true;
+            }
+            else
+            {
+                isRoomEmpty = false;
+            }
+            pckBuff.deleteLastRecieved();
+            recievedData = false;
+            break;
+        case MSG_ID::Matrix_AddTempValue:
+            matrixSendTemperature(p.data_0);
+            pckBuff.deleteLastRecieved();
+            recievedData = false;
+        break;
         }
       }
     }
     // alle 250ms
     if(!(counter % 10))
     {
-      if(recievedData)
-      {
-        recievedData = false;
-        handleNewRecieve();
-      }
+        // Handle the Recieved data from the Interrupt
+        if(recievedData)
+        {
+            recievedData = false;
+            handleNewRecieve();
+        }
+        handleStaticModes();
+
     } 
     // alle 0.5s
     if(!(counter % 20))
     {
-        // alive information
-        d.log("iam still alive");
+      // alive information
+      d.log("iam still alive");
+    }
+    if(!(counter % 160))
+    {
+      
     }
 
     // increment counter

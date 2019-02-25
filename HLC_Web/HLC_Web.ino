@@ -143,7 +143,7 @@ void loop()
     }
   }
 
-  Package p;
+  //Package p;
   //Serial.write((byte*)&p, sizeof(p));
   
   
@@ -173,16 +173,24 @@ void loop()
   else
   {
     ulReqcount++;
-    sResponse  = "<html><head><title>Demo f&uumlr ESP8266 Steuerung</title></head><body>";
+    sResponse  = "<html><head><title>Steuerung f&uumlr Helios Light Control</title></head><body>";
     sResponse += "<font color=\"#000000\"><body bgcolor=\"#d0d0f0\">";
     sResponse += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=yes\">";
-    sResponse += "<h1>Demo f&uumlr ESP8266 Access Point</h1>";
-    sResponse += "Funktion 1 schaltet GPIO2 und erzeugt eine serielle Ausgabe.<BR>";
-    sResponse += "Funktion 2 erzeugt nur eine serielle Ausgabe.<BR>";
+    sResponse += "<h1>teuerung f&uumlr Helios Light Control</h1>";
+    //sResponse += "Ueber folgende Buttons kann die Funktionalitaet der Matrix, bzw der Lamp gesteuert werden.<BR>";
+    sResponse += "<FONT SIZE=+2>";
+        
+    sResponse += "Matrix Control<BR>";
+    sResponse += "<FONT SIZE=-1>";
+    sResponse += "<p>Funktion FFT <a href=\"?pin=matrix_fft_ON\"><button>einschalten</button></a>&nbsp;<a href=\"?pin=matrix_fft_OFF\"><button>ausschalten</button></a></p>";
+    sResponse += "<p>Funktion Temperaturverlauf <a href=\"?pin=matrix_temperaturverlauf_ON\"><button>einschalten</button></a>&nbsp;<a href=\"?pin=matrix_temperaturverlauf_OFF\"><button>ausschalten</button></a></p>";
+    sResponse += "<p>Funktion Beleuchtung nach Temp. <a href=\"?pin=matrix_beleuchtungNachTemperatur_ON\"><button>einschalten</button></a>&nbsp;<a href=\"?pin=matrix_beleuchtungNachTemperatur_OFF\"><button>ausschalten</button></a></p>";
     sResponse += "<FONT SIZE=+1>";
-    sResponse += "<p>Funktion FFT <a href=\"?pin=FUNCTION1ON\"><button>einschalten</button></a>&nbsp;<a href=\"?pin=FUNCTION1OFF\"><button>ausschalten</button></a></p>";
-    sResponse += "<p>Funktion COLOR <a href=\"?pin=FUNCTION2ON\"><button>einschalten</button></a>&nbsp;<a href=\"?pin=FUNCTION2OFF\"><button>ausschalten</button></a></p>";
-    
+    sResponse += "Lamp Control<BR>";
+    sResponse += "<FONT SIZE=-1>";
+    sResponse += "<p>Funktion Lampe <a href=\"?pin=lamp_ON\"><button>einschalten</button></a>&nbsp;<a href=\"?pin=lamp_OFF\"><button>ausschalten</button></a></p>";
+
+
     //////////////////////
     // react on parameters
     //////////////////////

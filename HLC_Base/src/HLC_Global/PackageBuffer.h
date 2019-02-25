@@ -38,7 +38,7 @@ public:
 	void deleteLastRecieved();
 
     boolean hasPackages();
-
+    boolean hasPackageWithId(MSG_ID id);
     
 
 

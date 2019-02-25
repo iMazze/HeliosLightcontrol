@@ -28,7 +28,8 @@ Date: By: Description:
 // For FFT
 #define SAMPLES 64              //Must be a power of 2
 #define SAMPLING_FREQUENCY 5000 //Hz, must be less than 10000 due to ADC
- 
+#define MatrixHeight 15
+#define MatrixWidth 10
 class LedMatrix
 {    
 public:
@@ -45,6 +46,7 @@ public:
 
     void printColorWheel();
     void printBar(int frequenz, int amplitude);
+    void printTemperatureAsBar(int xValue, int temperature);
 
     void doFFT();
 
@@ -53,10 +55,10 @@ public:
 
     void setRGB(uint8_t r, uint8_t g, uint8_t b);
     void setHSV(uint16_t h, uint8_t s, uint8_t v);
-    void setHEX(unsigned long rgb);
+    void setHEX(unsigned long rgb);    
 
-    const uint8_t MatrixHeight = 15;
-    const uint8_t MatrixWidth = 10;
+    void addTemperatureToBuffer(int temperature);
+    void showTemperatureChart();
 private:
     const uint8_t ws2812_pin = 8;
     
@@ -67,6 +69,8 @@ private:
     
     double vReal[SAMPLES];
     double vImag[SAMPLES];
+
+    int temperatureBuffer[MatrixWidth];
 };
 
 #endif

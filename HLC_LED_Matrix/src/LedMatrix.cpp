@@ -26,6 +26,11 @@ LedMatrix::LedMatrix()
 
     // Setups the FFT    
     sampling_period_us = round(1500000*(1.0/SAMPLING_FREQUENCY));
+
+    for(int i = 0; i<MatrixWidth; i++)
+    {
+        temperatureBuffer[i] = 10; // Sets to the Minimum value;
+    }
 }
 
 // Initializes the LedMatrix
@@ -68,9 +73,6 @@ void LedMatrix::printColorWheel()
                     sat = (int)(d / 15.5 * 255.0 + 0.5);
                     val = 255;
                 }
-
-                sat = map(sat, 0, 255, 0, 100);
-                val = map(val, 0, 255, 0, 100);
 
 
                 HSV_to_RGB(hue, sat, val, &r, &g, &b);
@@ -142,9 +144,25 @@ void LedMatrix::printBar(int frequenz, int amplitude)
     {
         uint8_t r,g,b;
         // Calc HSV
-        //HSV_to_RGB(24*(14-i), 200,200, &r, &g, &b);
+        HSV_to_RGB(24*(14-i), 200,200, &r, &g, &b);
 
-        matrix.drawPixel(frequenz, 14-i, matrix.Color(50, 0, 0));
+        //matrix.drawPixel(frequenz, 14-i, matrix.Color(50, 0, 0));
+        matrix.drawPixel(frequenz, 14-i,matrix.Color(r,g,b));
+    }
+}
+
+// Prints a temperature as a bar to the matrix
+void LedMatrix::printTemperatureAsBar(int xValue, int temperature)
+{
+    for(int i = 0; i < temperature; i++)
+    {
+        uint8_t r,g,b;
+        // Calc HSV
+        //240...360
+        HSV_to_RGB((8*i)+239, 253,150, &r, &g, &b);
+        
+
+        matrix.drawPixel(xValue, 15-i,matrix.Color(r,g,b));
     }
 }
 
@@ -208,4 +226,24 @@ void LedMatrix::setHSV(uint16_t h, uint8_t s, uint8_t v)
     HSV_to_RGB(h, s, v, &r, &g, &b);
 
     setRGB(r,g,b);
+}
+
+void LedMatrix::addTemperatureToBuffer(int temperature)
+{
+    // Shift all temperatrures
+    for(int i = MatrixWidth - 1; i!=0; i--)
+    {
+        temperatureBuffer[i] = temperatureBuffer[i-1];
+    }
+    temperatureBuffer[0] = temperature;
+}
+
+void LedMatrix::showTemperatureChart()
+{
+    matrix.fillScreen(0);
+    for(int i = 0; i<MatrixWidth; i++)
+    {
+        printTemperatureAsBar(i, (temperatureBuffer[i]-10)/2);
+    }
+    matrix.show();
 }

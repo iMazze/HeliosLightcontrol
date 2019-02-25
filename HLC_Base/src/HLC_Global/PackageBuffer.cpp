@@ -64,6 +64,7 @@ Package PackageBuffer::getPackageWithId(MSG_ID id)
 			return myArray[i];
 		}
 	}
+    // ERRORCASE
 }
 
 // Returns the first package in the buffer. Most times its the oldest one
@@ -107,4 +108,17 @@ void PackageBuffer::deleteLastRecieved()
 boolean PackageBuffer::hasPackages()
 {
     return numberOfElements != 0;
+}
+
+// Returns true if there is a package with the specific id in the buffer
+boolean PackageBuffer::hasPackageWithId(MSG_ID id)
+{
+    for(int i = 0; i<(sizeof(myArray) / sizeof(myArray[0]))-1; i++)
+	{
+		if(myArray[i].id == id)
+		{
+			return true;
+		}
+	}
+    return false;
 }

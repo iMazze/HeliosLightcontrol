@@ -1,0 +1,419 @@
+{
+    "extension": "linecount",
+    "version": "0.1.7",
+    "workspace": "/Users/imazze/Desktop/HeliosLightcontrol",
+    "linecount": [
+        {
+            "version": "0.1.7",
+            "counttime": "2019-02-24 16:35:59",
+            "filesum": 67,
+            "codesum": 4068,
+            "commentsum": 1717,
+            "blanksum": 932,
+            "filelist": [
+                {
+                    "blank": 26,
+                    "code": 101,
+                    "comment": 54,
+                    "filename": "HLC_Base/HLC_Base.ino"
+                },
+                {
+                    "blank": 19,
+                    "code": 153,
+                    "comment": 34,
+                    "filename": "HLC_Base/HLC_Base_Control.ino"
+                },
+                {
+                    "blank": 6,
+                    "code": 72,
+                    "comment": 8,
+                    "filename": "HLC_Base/HLC_Base_Helper.ino"
+                },
+                {
+                    "blank": 8,
+                    "code": 43,
+                    "comment": 22,
+                    "filename": "HLC_Base/src/HLC_Global/Debug.cpp"
+                },
+                {
+                    "blank": 4,
+                    "code": 19,
+                    "comment": 15,
+                    "filename": "HLC_Base/src/HLC_Global/Debug.h"
+                },
+                {
+                    "blank": 14,
+                    "code": 80,
+                    "comment": 30,
+                    "filename": "HLC_Base/src/HLC_Global/PackageBuffer.cpp"
+                },
+                {
+                    "blank": 10,
+                    "code": 23,
+                    "comment": 18,
+                    "filename": "HLC_Base/src/HLC_Global/PackageBuffer.h"
+                },
+                {
+                    "blank": 12,
+                    "code": 76,
+                    "comment": 36,
+                    "filename": "HLC_Base/src/HLC_Global/TimerOne.cpp"
+                },
+                {
+                    "blank": 7,
+                    "code": 24,
+                    "comment": 16,
+                    "filename": "HLC_Base/src/HLC_Global/TimerOne.h"
+                },
+                {
+                    "blank": 16,
+                    "code": 39,
+                    "comment": 38,
+                    "filename": "HLC_Base/src/HLC_Global/WirelessConnection.cpp"
+                },
+                {
+                    "blank": 14,
+                    "code": 52,
+                    "comment": 24,
+                    "filename": "HLC_Base/src/HLC_Global/WirelessConnection.h"
+                },
+                {
+                    "blank": 24,
+                    "code": 28,
+                    "comment": 8,
+                    "filename": "HLC_Lamp/HLC_Arduino.ino"
+                },
+                {
+                    "blank": 95,
+                    "code": 166,
+                    "comment": 64,
+                    "filename": "HLC_Lamp/HLC_Lamp.ino"
+                },
+                {
+                    "blank": 8,
+                    "code": 43,
+                    "comment": 12,
+                    "filename": "HLC_Lamp/src/HLC_Global/Debug.cpp"
+                },
+                {
+                    "blank": 2,
+                    "code": 16,
+                    "comment": 12,
+                    "filename": "HLC_Lamp/src/HLC_Global/Debug.h"
+                },
+                {
+                    "blank": 8,
+                    "code": 28,
+                    "comment": 12,
+                    "filename": "HLC_Lamp/src/HLC_Global/PackageBuffer.cpp"
+                },
+                {
+                    "blank": 8,
+                    "code": 13,
+                    "comment": 13,
+                    "filename": "HLC_Lamp/src/HLC_Global/PackageBuffer.h"
+                },
+                {
+                    "blank": 12,
+                    "code": 76,
+                    "comment": 35,
+                    "filename": "HLC_Lamp/src/HLC_Global/TimerOne.cpp"
+                },
+                {
+                    "blank": 5,
+                    "code": 21,
+                    "comment": 15,
+                    "filename": "HLC_Lamp/src/HLC_Global/TimerOne.h"
+                },
+                {
+                    "blank": 25,
+                    "code": 39,
+                    "comment": 26,
+                    "filename": "HLC_Lamp/src/HLC_Global/WirelessConnection.cpp"
+                },
+                {
+                    "blank": 13,
+                    "code": 47,
+                    "comment": 15,
+                    "filename": "HLC_Lamp/src/HLC_Global/WirelessConnection.h"
+                },
+                {
+                    "blank": 24,
+                    "code": 138,
+                    "comment": 50,
+                    "filename": "HLC_LED_Matrix/HLC_LED_Matrix.ino"
+                },
+                {
+                    "blank": 21,
+                    "code": 356,
+                    "comment": 64,
+                    "filename": "HLC_LED_Matrix/src/FFT/arduinoFFT.cpp"
+                },
+                {
+                    "blank": 7,
+                    "code": 63,
+                    "comment": 8,
+                    "filename": "HLC_LED_Matrix/src/FFT/arduinoFFT.h"
+                },
+                {
+                    "blank": 11,
+                    "code": 38,
+                    "comment": 43,
+                    "filename": "HLC_LED_Matrix/src/FFT/defs.h"
+                },
+                {
+                    "blank": 10,
+                    "code": 43,
+                    "comment": 16,
+                    "filename": "HLC_LED_Matrix/src/FFT/types.h"
+                },
+                {
+                    "blank": 8,
+                    "code": 43,
+                    "comment": 22,
+                    "filename": "HLC_LED_Matrix/src/HLC_Global/Debug.cpp"
+                },
+                {
+                    "blank": 4,
+                    "code": 19,
+                    "comment": 15,
+                    "filename": "HLC_LED_Matrix/src/HLC_Global/Debug.h"
+                },
+                {
+                    "blank": 14,
+                    "code": 80,
+                    "comment": 30,
+                    "filename": "HLC_LED_Matrix/src/HLC_Global/PackageBuffer.cpp"
+                },
+                {
+                    "blank": 10,
+                    "code": 23,
+                    "comment": 18,
+                    "filename": "HLC_LED_Matrix/src/HLC_Global/PackageBuffer.h"
+                },
+                {
+                    "blank": 12,
+                    "code": 76,
+                    "comment": 36,
+                    "filename": "HLC_LED_Matrix/src/HLC_Global/TimerOne.cpp"
+                },
+                {
+                    "blank": 7,
+                    "code": 24,
+                    "comment": 16,
+                    "filename": "HLC_LED_Matrix/src/HLC_Global/TimerOne.h"
+                },
+                {
+                    "blank": 16,
+                    "code": 39,
+                    "comment": 38,
+                    "filename": "HLC_LED_Matrix/src/HLC_Global/WirelessConnection.cpp"
+                },
+                {
+                    "blank": 14,
+                    "code": 52,
+                    "comment": 24,
+                    "filename": "HLC_LED_Matrix/src/HLC_Global/WirelessConnection.h"
+                },
+                {
+                    "blank": 4,
+                    "code": 58,
+                    "comment": 17,
+                    "filename": "HLC_LED_Matrix/src/HSV_RGB.c"
+                },
+                {
+                    "blank": 42,
+                    "code": 160,
+                    "comment": 50,
+                    "filename": "HLC_LED_Matrix/src/LedMatrix.cpp"
+                },
+                {
+                    "blank": 13,
+                    "code": 41,
+                    "comment": 24,
+                    "filename": "HLC_LED_Matrix/src/LedMatrix.h"
+                },
+                {
+                    "blank": 26,
+                    "code": 101,
+                    "comment": 64,
+                    "filename": "HLC_Sensor/HLC_Sensor.ino"
+                },
+                {
+                    "blank": 42,
+                    "code": 181,
+                    "comment": 113,
+                    "filename": "HLC_Sensor/src/Adafruit_TCS34725.cpp"
+                },
+                {
+                    "blank": 12,
+                    "code": 97,
+                    "comment": 35,
+                    "filename": "HLC_Sensor/src/Adafruit_TCS34725.h"
+                },
+                {
+                    "blank": 12,
+                    "code": 76,
+                    "comment": 35,
+                    "filename": "HLC_Sensor/src/HLC_Global/TimerOne.cpp"
+                },
+                {
+                    "blank": 5,
+                    "code": 21,
+                    "comment": 15,
+                    "filename": "HLC_Sensor/src/HLC_Global/TimerOne.h"
+                },
+                {
+                    "blank": 25,
+                    "code": 39,
+                    "comment": 26,
+                    "filename": "HLC_Sensor/src/HLC_Global/WirelessConnection.cpp"
+                },
+                {
+                    "blank": 14,
+                    "code": 47,
+                    "comment": 15,
+                    "filename": "HLC_Sensor/src/HLC_Global/WirelessConnection.h"
+                },
+                {
+                    "blank": 11,
+                    "code": 106,
+                    "comment": 34,
+                    "filename": "HLC_Sensor/src/Sensoring.cpp"
+                },
+                {
+                    "blank": 7,
+                    "code": 42,
+                    "comment": 34,
+                    "filename": "HLC_Sensor/src/Sensoring.h"
+                },
+                {
+                    "blank": 31,
+                    "code": 149,
+                    "comment": 56,
+                    "filename": "HLC_Web/HLC_Web.ino"
+                },
+                {
+                    "blank": 0,
+                    "code": 6,
+                    "comment": 0,
+                    "filename": "HLC_Web/index.html"
+                },
+                {
+                    "blank": 1,
+                    "code": 34,
+                    "comment": 7,
+                    "filename": "README.md"
+                },
+                {
+                    "blank": 10,
+                    "code": 62,
+                    "comment": 45,
+                    "filename": "tmp/communication_Ideas.txt"
+                },
+                {
+                    "blank": 25,
+                    "code": 128,
+                    "comment": 35,
+                    "filename": "tmp/ESP DEMO/ESP_WebServerAP.ino"
+                },
+                {
+                    "blank": 11,
+                    "code": 25,
+                    "comment": 10,
+                    "filename": "tmp/HLC_Example/HLC_Example.ino"
+                },
+                {
+                    "blank": 4,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "tmp/HLC_Example/src/HLC_Global/Debug.cpp"
+                },
+                {
+                    "blank": 1,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "tmp/HLC_Example/src/HLC_Global/Debug.h"
+                },
+                {
+                    "blank": 12,
+                    "code": 76,
+                    "comment": 23,
+                    "filename": "tmp/HLC_Example/src/HLC_Global/TimerOne.cpp"
+                },
+                {
+                    "blank": 5,
+                    "code": 21,
+                    "comment": 3,
+                    "filename": "tmp/HLC_Example/src/HLC_Global/TimerOne.h"
+                },
+                {
+                    "blank": 11,
+                    "code": 44,
+                    "comment": 15,
+                    "filename": "tmp/HLC_Example/src/HLC_Global/WirelessConnection.cpp"
+                },
+                {
+                    "blank": 11,
+                    "code": 34,
+                    "comment": 2,
+                    "filename": "tmp/HLC_Example/src/HLC_Global/WirelessConnection.h"
+                },
+                {
+                    "blank": 23,
+                    "code": 59,
+                    "comment": 31,
+                    "filename": "tmp/HLC_Sender/HLC_Sender.ino"
+                },
+                {
+                    "blank": 8,
+                    "code": 43,
+                    "comment": 12,
+                    "filename": "tmp/HLC_Sender/src/HLC_Global/Debug.cpp"
+                },
+                {
+                    "blank": 2,
+                    "code": 16,
+                    "comment": 12,
+                    "filename": "tmp/HLC_Sender/src/HLC_Global/Debug.h"
+                },
+                {
+                    "blank": 7,
+                    "code": 28,
+                    "comment": 12,
+                    "filename": "tmp/HLC_Sender/src/HLC_Global/PackageBuffer.cpp"
+                },
+                {
+                    "blank": 8,
+                    "code": 13,
+                    "comment": 13,
+                    "filename": "tmp/HLC_Sender/src/HLC_Global/PackageBuffer.h"
+                },
+                {
+                    "blank": 12,
+                    "code": 76,
+                    "comment": 35,
+                    "filename": "tmp/HLC_Sender/src/HLC_Global/TimerOne.cpp"
+                },
+                {
+                    "blank": 5,
+                    "code": 21,
+                    "comment": 15,
+                    "filename": "tmp/HLC_Sender/src/HLC_Global/TimerOne.h"
+                },
+                {
+                    "blank": 25,
+                    "code": 39,
+                    "comment": 26,
+                    "filename": "tmp/HLC_Sender/src/HLC_Global/WirelessConnection.cpp"
+                },
+                {
+                    "blank": 13,
+                    "code": 47,
+                    "comment": 16,
+                    "filename": "tmp/HLC_Sender/src/HLC_Global/WirelessConnection.h"
+                }
+            ]
+        }
+    ]
+}

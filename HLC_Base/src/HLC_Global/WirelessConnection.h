@@ -44,7 +44,9 @@ enum MSG_ID
     Matrix_HSV = 23,
     Matrix_HEX = 24,
     Matrix_AddTempValue = 25,
-    Matrix_Tempchart_Show = 26
+    Matrix_Tempchart_Show = 26,
+    Lamp_Colortemp = 30,
+    Lamp_Blink = 31
 };
 
 // The define List with all device IDs
@@ -73,6 +75,7 @@ class WirelessConnection
     WirelessConnection(RF24& _radio, uint64_t id);
 
     void start();
+    
     void attachInterruptFunction(void (* InterruptFunction)());    
     void sendData(Package data, uint64_t reciever_address);
     Package getData();

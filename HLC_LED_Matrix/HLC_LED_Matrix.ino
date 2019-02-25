@@ -43,7 +43,13 @@ LedMatrix ledmatrix = LedMatrix();
 PackageBuffer pckBuff;
 
 // Internal states
-boolean fft_active = false;
+enum e_mode {
+  static_mode,
+  fft,
+  temperature_chart
+};
+
+e_mode mode = static_mode;
 
 /*========================================================================*/
 /*                          Initializing                                  */
@@ -98,17 +104,17 @@ void timer_loop()
                 if(p.data_0 == 1)
                 {
                     // switch on
-                    fft_active = true;
+                    mode = fft;
                 }
                 else
                 {
                     // switch off
-                    fft_active = false;
+                    mode = static_mode;
                     ledmatrix.fullOff();
                 }
                 break;
             case MSG_ID::Matrix_Fullon:
-                fft_active = false;
+                mode = static_mode;
                 if(p.data_0 == 1)
                 {
                     ledmatrix.fullOn();
@@ -119,7 +125,7 @@ void timer_loop()
                 }
                 break;
             case MSG_ID::Matrix_HSV:
-                fft_active = false;
+                mode = static_mode;
                 if(p.data_0 == 1)
                 {
                     ledmatrix.setHSV(p.data_1, p.data_2, p.data_3);
@@ -130,7 +136,7 @@ void timer_loop()
                 }
                 break;
             case MSG_ID::Matrix_RGB:
-                fft_active = false;
+                mode = static_mode;
                 if(p.data_0 == 1)
                 {
                     ledmatrix.setRGB(p.data_1, p.data_2, p.data_3);
@@ -141,7 +147,7 @@ void timer_loop()
                 }
                 break;   
             case MSG_ID::Matrix_HEX:
-                fft_active = false;
+                mode = static_mode;
                 if(p.data_0 == 1)
                 {
                     ledmatrix.setHEX(p.data_1);
@@ -150,8 +156,23 @@ void timer_loop()
                 {
                     ledmatrix.fullOff();
                 }
-                break;     
+                break;  
+            case MSG_ID::Matrix_Tempchart_Show:
+                if(p.data_0 == 1)
+                {
+                    mode = temperature_chart;
+                }
+                else
+                {
+                    mode = static_mode;
+                    ledmatrix.fullOff();
+                }
+                break;
+            case MSG_ID::Matrix_AddTempValue:
+                ledmatrix.addTemperatureToBuffer(p.data_0);
+                break;   
             }
+            
             
         }
     }
@@ -164,7 +185,7 @@ void timer_loop()
     // alle 0.5s
     if(!(counter % 20))
     {
-        //ledmatrix.doFFT();
+        // nothing
     }
 
     // increment counter
@@ -174,11 +195,17 @@ void timer_loop()
 /*========================================================================*/
 /*                            Main Loop                                   */
 /*========================================================================*/
-void loop(){
-
+void loop()
+{
     // Does the FFT if active
-    if(fft_active)
+    if(mode == fft)
     {
         ledmatrix.doFFT();
     }
+    else if(mode == temperature_chart)
+    {
+         ledmatrix.showTemperatureChart();
+         delay(500);
+    }
+    
 };

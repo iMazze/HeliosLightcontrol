@@ -9,7 +9,7 @@ void handleSerialRecieve()
     }
     else if(StrContains(buf, "matrix_fft_ON"))
     {
-      matrixMode = fft;
+        matrixMode = fft;
     }
     else if(StrContains(buf, "matrix_temperaturverlauf_ON"))
     {

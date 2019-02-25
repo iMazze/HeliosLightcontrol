@@ -34,14 +34,19 @@ void handleStaticModes()
                 uint16_t actHumidity = pckBuff.getPackageWithId(MSG_ID::Sensor_Humidity).data_0;
                 if(actHumidity > 60)
                 {
-                    lampSendBlink(0); // Orange
+                    lampSendBlink(0xFF, 0xFF, 0); // Orange
                 }
                 else if(actHumidity < 40)
                 {
-                    lampSendBlink(0); // Lila
+                    lampSendBlink(0, 0, 0xFF); // Lila
                 }
             }
         }
+        else
+        {
+            lampSetOff();
+        }
+        
     }
 }
 
@@ -103,6 +108,12 @@ void handleNewRecieve()
             }
         }
     }
+    else
+    {
+        matrixSetOff();
+        lampSetOff();
+    }
+    
 }
 
 /*========================================================================*/
@@ -181,20 +192,33 @@ void matrixSendTemperature(int temperature)
 /*========================================================================*/
 /*                           Lamp Controls                                */
 /*========================================================================*/
+
+void lampSetOff()
+{
+  Package p;
+  p.id = MSG_ID::Lamp_Colortemp;
+  p.data_0 = 0;
+  wc.sendData(p, ID_HLC_LAMP);
+}
+
 void lampSendColorTemperature(int colorTemperature)
 {
   Package p;
-  //p.id = XXX;
-  p.data_0 = colorTemperature;
-  //wc.sendData(p, ID_HLC_MATRIX);
+  p.id = MSG_ID::Lamp_Colortemp;
+  p.data_0 = 1; // Steady 1
+  p.data_1 = colorTemperature;
+  wc.sendData(p, ID_HLC_LAMP);
   d.logPackage(p);
 }
 
-void lampSendBlink(int color)
+void lampSendBlink(uigt r, uint8_t g, uint8_t b)
 {
     Package p;
-    //p.id = XXX;
-    p.data_0 = color;
-    //wc.sendData(p, ID_HLC_MATRIX);
+    p.id = MSG_ID::Lamp_Blink;
+    p.data_0 = 1; // Steady 1
+    p.data_1 = r;
+    p.data_2 = g;
+    p.data_3 = b;
+    wc.sendData(p, ID_HLC_LAMP);
     d.logPackage(p);
 }

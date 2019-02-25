@@ -92,7 +92,7 @@ void nrf_interrupt()
 {
     recievedData = true;
     Package p = wc.getData();
-    d.logPackage(p);
+    //d.logPackage(p);
 
     // Adds the recieved package to the Buffer
     pckBuff.overritePackage(p);
@@ -124,17 +124,23 @@ void timer_loop()
             }
             pckBuff.deleteLastRecieved();
             recievedData = false;
-            break;
-        case MSG_ID::Matrix_AddTempValue:
-            matrixSendTemperature(p.data_0);
-            pckBuff.deleteLastRecieved();
-            recievedData = false;
+        break;
+        // case MSG_ID::Matrix_AddTempValue:
+        //     matrixSendTemperature(p.data_0);
+        //     pckBuff.deleteLastRecieved();
+        //     recievedData = false;
         break;
         }
       }
     }
-    // alle 250ms
-    if(!(counter % 10))
+    // alle 0.5s
+    if(!(counter % 20))
+    {
+      // alive information
+      d.log("iam still alive");
+    }
+    // alle 1s
+    if(!(counter % 40))
     {
         // Handle the Recieved data from the Interrupt
         if(recievedData)
@@ -145,15 +151,22 @@ void timer_loop()
         handleStaticModes();
 
     } 
-    // alle 0.5s
-    if(!(counter % 20))
-    {
-      // alive information
-      d.log("iam still alive");
-    }
+    // alle 4s
     if(!(counter % 160))
     {
-      
+        if(matrixMode == temperaturverlauf)
+        {
+            // If there is no package --> break;
+            if(pckBuff.hasPackageWithId(MSG_ID::Sensor_Temperature))
+            {
+                uint16_t actTemperature = pckBuff.getPackageWithId(MSG_ID::Sensor_Temperature).data_0;
+                matrixSendTemperature(actTemperature);
+            }
+            
+        }
+
+
+
     }
 
     // increment counter

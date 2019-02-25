@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
     "sketch": "HLC_Base/HLC_Base.ino",
-    "port": "/dev/cu.usbmodem14401"
+    "port": "/dev/cu.usbmodem14601"
 }

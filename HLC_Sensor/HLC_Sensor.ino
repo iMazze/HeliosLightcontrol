@@ -31,100 +31,56 @@ Sensoring Sensors;
 
 uint16_t NumberOfPersonsOld = 0;
 bool restarted = true;
-bool t_50ms = false;
-bool t_2000ms = false;
 
 
 void setup() {
-  // put your setup code here, to run once:
   radio_24.begin();
 
   // Setup WirelessConnection
   wc.start();
-
-  // Setup Timer
-  Timer1.initialize(timer_interval*1000);
-  Timer1.attachInterrupt(timer_loop);
   
   Serial.begin(9600);
-  Serial.println ("Ende Setup");
-}
-
-// Loop from Timer1
-void timer_loop() 
-{
- // alle 50ms
-    if(!(counter % 1))
-    {
-        t_50ms = true;
-    }
-    // alle 2000ms
-    if(!(counter % 40))
-    {
-        t_2000ms = true;
-    }
-    if(!(counter%100))
-    {
-        Package Persons; //Package with number of persons which are actual inside the room
-        Persons.id = MSG_ID::Sensor_Doorsensor;
-        Persons.data_0 = random(0,3);
-        Persons.data_1 = 0;
-        Persons.data_2 = 0;
-        Persons.data_3 = 0;
-        //NumberOfPersonsOld = tNumber;
-        wc.sendData(Persons, 0xA00B1E5000LL);
-    }
-    counter++;   
 }
 
 // mainloop
-void loop() {
-  // put your main code here, to run repeatedly:
- //Serial.println("");
- //Serial.println("Main");
- //Serial.println(dht2.readHumidity());
-
-    // alle 50ms
-    if(t_50ms == true)
+void loop() 
+{
+    // ~every 50ms
+    if(!(counter % 1))
     {
        restarted=false;
        
-       //Durchlaufen der Abstandsmessung zwischen den Türrahmen, um ein- bzw herausgehende Personen zu erkennen
-       //Sensors.accesControl();
-       //uint16_t tNumber = Sensors.sendNumberOfPersons();
-       //Serial.println(tNumber);
-       //if (NumberOfPersonsOld != tNumber || restarted == true)
-       //{
-       //   Serial.println ("Number:");
-       //   Serial.println (tNumber);
-        //      Package Persons; //Package with number of persons which are actual inside the room
-        //      Persons.id = MSG_ID::Sensor_Doorsensor;
-        //      Persons.data_0 = tNumber;
-        //      Persons.data_1 = 0;
-        //      Persons.data_2 = 0;
-        //      Persons.data_3 = 0;
-        //  NumberOfPersonsOld = tNumber;
-        //      wc.sendData(Persons, 0xA00B1E5000LL);
-        //t_50ms=false;
-        //  delay(1000);
-       //
+       // Meassuring of distance between the doorframe, to ackknowledge if someone enters or left the room
+       Sensors.accesControl();
+       uint16_t tNumber = Sensors.sendNumberOfPersons();
+       if (NumberOfPersonsOld != tNumber || restarted == true)
+       {
+          Serial.println("Sending Number of persons");
+          Package Persons; //Package with number of persons which are actual inside the room
+          Persons.id = MSG_ID::Sensor_Doorsensor;
+          Persons.data_0 = tNumber;
+          Persons.data_1 = 0;
+          Persons.data_2 = 0;
+          Persons.data_3 = 0;
+          NumberOfPersonsOld = tNumber;
+          wc.sendData(Persons, ID_HLC_BASE);
+          delay(1000);
+       }
     }
 
-    // alle 2s
-    if(t_2000ms == true)
+    // ~every 2s
+    if(!(counter % 20))
     {
-        Serial.println("");
-        Serial.println("Sensordaten 1000ms");
-        //Serial.println(dht2.readTemperature());
-        //Serial.println(dht2.readHumidity());
         Sensors.measuring();
         Serial.println("Temp");
-        Serial.println(Sensors.sendTemperature());
+        //Serial.println(Sensors.sendTemperature());
+        //Serial.println("Humidity");
         //Serial.println(Sensors.sendHumidity());
         //Serial.println("Lux");
         //Serial.println(Sensors.sendLux());
-        Serial.println("ColorTemp");
-        Serial.println(Sensors.sendColorTemp());
+        //Serial.println("ColorTemp");
+        //Serial.println(Sensors.sendColorTemp());
+        
         Package temp; // Package with temperaturvalue
         temp.id = MSG_ID::Sensor_Temperature;
         temp.data_0 = Sensors.sendTemperature();
@@ -132,7 +88,7 @@ void loop() {
         temp.data_2 = 0;
         temp.data_3 = 0;
 
-        wc.sendData(temp, 0xA00B1E5000LL);
+        wc.sendData(temp, ID_HLC_BASE);
         delay(10);
 
         Package hum; //Package with humidityvalue
@@ -142,7 +98,7 @@ void loop() {
         hum.data_2 = 0;
         hum.data_3 = 0;
 
-        wc.sendData(hum, 0xA00B1E5000LL);
+        wc.sendData(hum, ID_HLC_BASE);
         delay(10);
 
         Package colortemp; //Package with colortemperature
@@ -152,7 +108,9 @@ void loop() {
         colortemp.data_2 = 0;
         colortemp.data_3 = 0;
 
-        wc.sendData(colortemp, 0xA00B1E5000LL);
+        wc.sendData(colortemp, ID_HLC_BASE);
+        delay(10);
+        wc.sendData(colortemp, ID_HLC_LAMP);
         delay(10);
 
         Package lux; //Package with 
@@ -162,7 +120,7 @@ void loop() {
         lux.data_2 = 0;
         lux.data_3 = 0;
 
-        wc.sendData(lux, 0xA00B1E5000LL);
+        wc.sendData(lux, ID_HLC_BASE);
         delay(10);
 
         Package RGB; //Package with all RGB values of light
@@ -172,13 +130,14 @@ void loop() {
         RGB.data_2 = Sensors.sendBlue();
         RGB.data_3 = 0;
 
-        wc.sendData(RGB, 0xA00B1E5000LL);
+        wc.sendData(RGB, ID_HLC_BASE);
         delay(10);
         // delay (1000);
-        t_2000ms = false;
-        delay (100);
+        //reset counter
+        counter = 0;
     }
 
     // increment counter
- //delay(1000);
+    counter++;
+    delay(10);
 };

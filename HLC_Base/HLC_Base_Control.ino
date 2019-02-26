@@ -208,7 +208,6 @@ void lampSendColorTemperature(int colorTemperature)
   p.data_0 = 1; // Steady 1
   p.data_1 = colorTemperature;
   wc.sendData(p, ID_HLC_LAMP);
-  d.logPackage(p);
 }
 
 void lampSendBlink(uigt r, uint8_t g, uint8_t b)
@@ -220,5 +219,4 @@ void lampSendBlink(uigt r, uint8_t g, uint8_t b)
     p.data_2 = g;
     p.data_3 = b;
     wc.sendData(p, ID_HLC_LAMP);
-    d.logPackage(p);
 }

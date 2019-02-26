@@ -20,17 +20,17 @@ Date: By: Description:
 // Converts the hsv to rgb value.
 void HSV_to_RGB(uint16_t hue, int sat, int val, uint8_t* r_, uint8_t* g_, uint8_t*b_) 
 {
-        int colors[3];
+    int colors[3];
 	// hue: 0-359, sat: 0-255, val (lightness): 0-255
 	int r, g, b, base;
 	if (sat == 0) 
-		{                     // Achromatic color (gray).
-		colors[0] = val;
-		colors[1] = val;
-		colors[2] = val;
-		} 
+    {                     // Achromatic color (gray).
+        colors[0] = val;
+        colors[1] = val;
+        colors[2] = val;
+    } 
 	else  
-		{
+    {
 		base = ((255 - sat) * val) >> 8;
 		switch(hue / 60) 
 			{
@@ -68,11 +68,11 @@ void HSV_to_RGB(uint16_t hue, int sat, int val, uint8_t* r_, uint8_t* g_, uint8_
 			colors[0] = r;
 			colors[1] = g;
 			colors[2] = b;
-		}
+    }
 
-        *r_ = colors[0];
-        *g_ = colors[1];
-        *b_ = colors[2];
-	}
+    *r_ = colors[0];
+    *g_ = colors[1];
+    *b_ = colors[2];
+}
 
 #endif

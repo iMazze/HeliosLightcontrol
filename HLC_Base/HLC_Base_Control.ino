@@ -32,11 +32,12 @@ void handleStaticModes()
             if(pckBuff.hasPackageWithId(MSG_ID::Sensor_Humidity))
             {
                 uint16_t actHumidity = pckBuff.getPackageWithId(MSG_ID::Sensor_Humidity).data_0;
+                Serial.print("Luftfeuchte:"); Serial.println(actHumidity);
                 if(actHumidity > 60)
                 {
                     lampSendBlink(0xFF, 0xFF, 0); // Orange
                 }
-                else if(actHumidity < 40)
+                else if(actHumidity < 20)
                 {
                     lampSendBlink(0, 0, 0xFF); // Lila
                 }
@@ -100,10 +101,12 @@ void handleNewRecieve()
         // Handle HLC_Lamp
         if(lampOn)
         {
+            
             // If there is no package --> break;
             if(pckBuff.hasPackageWithId(MSG_ID::Sensor_Colortemp))
             {
                 uint16_t actColorTemperature = pckBuff.getPackageWithId(MSG_ID::Sensor_Colortemp).data_0;
+                Serial.println("Sending act. ColorTemp");
                 lampSendColorTemperature(actColorTemperature);
             }
         }
@@ -181,12 +184,13 @@ void matrixSetTemperatureChart()
 
 void matrixSendTemperature(int temperature)
 {
-  Serial.println("Send Temperature");
   Package p;
   p.id = MSG_ID::Matrix_AddTempValue;
-  p.data_0 = temperature;//random(10,40);
+  p.data_0 = temperature;
+  p.data_1 = 0;
+  p.data_2 = 0;
+  p.data_3 = 0;
   wc.sendData(p, ID_HLC_MATRIX);
-  d.logPackage(p);
 }
 
 /*========================================================================*/
@@ -210,7 +214,7 @@ void lampSendColorTemperature(int colorTemperature)
   wc.sendData(p, ID_HLC_LAMP);
 }
 
-void lampSendBlink(uigt r, uint8_t g, uint8_t b)
+void lampSendBlink(uint8_t r, uint8_t g, uint8_t b)
 {
     Package p;
     p.id = MSG_ID::Lamp_Blink;

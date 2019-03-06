@@ -85,6 +85,8 @@ void setup()
 
     // Make LED initially Off
     matrixSetOff();
+    // Make Lamp initially Off
+    lampSetOff();
 };
 
 // Interrupt function for recieving package data
@@ -125,11 +127,6 @@ void timer_loop()
             pckBuff.deleteLastRecieved();
             recievedData = false;
         break;
-        // case MSG_ID::Matrix_AddTempValue:
-        //     matrixSendTemperature(p.data_0);
-        //     pckBuff.deleteLastRecieved();
-        //     recievedData = false;
-        break;
         }
       }
     }
@@ -164,9 +161,10 @@ void timer_loop()
             }
             
         }
-
-
-
+    }
+    if(!(counter % 320))
+    {
+        
     }
 
     // increment counter

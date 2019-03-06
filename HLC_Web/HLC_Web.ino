@@ -2,10 +2,12 @@
 FILE: HLC_Web.ino
 PROJECT: HELIOSLIGHTCONTROL
 MODULE: ESP 01 for Webinterfacing
-Description: Its the Main File of the Web Moduke which sends Data to the Base Station
+Description: Its the Main File of the Web Moduke which sends Data to the Base Station.
+                Makes an AccessPoint with SSID HLC-Web
 
 
 Compiler dependencies or special instructions:
+- ESP8266WiFi.h
 
 REVISION HISTORY
 Date: By: Description:
@@ -22,34 +24,6 @@ unsigned long ulReqcount;
 
 // Create an instance of the server on Port 80
 WiFiServer server(80);
-
-
-// WC Things
-enum MSG_ID
-{
-    EMPTY = 0,
-    Temperatur = 11,
-    Luftfeuchte = 12,
-    Farbtemperatur = 13,
-    Helligkeit = 14,
-    Matrix_FFT_Show = 20,
-    Matrix_Fullon = 21,
-    Matrix_RGB = 22,
-    Matrix_HSV = 23
-};
-
-struct package
-{
-    MSG_ID id = MSG_ID::EMPTY;
-    uint64_t source_id = 00;
-    uint16_t data_0;
-    uint16_t data_1;
-    uint16_t data_2;
-    uint16_t data_3;
-};
-
-typedef struct package Package;
-//
 
 void setup() 
 {
@@ -76,7 +50,6 @@ void loop()
   }
   
   // Wait until the client sends some data
-  //Serial.println("new client");
   unsigned long ultimeout = millis()+250;
   while(!client.available() && (millis()<ultimeout) )
   {
@@ -84,19 +57,16 @@ void loop()
   }
   if(millis()>ultimeout) 
   { 
-    //Serial.println("client connection time-out!");
     return; 
   }
   
   // Read the first line of the request
   String sRequest = client.readStringUntil('\r');
-  //Serial.println(sRequest);
   client.flush();
   
   // stop client, if request is empty
   if(sRequest=="")
   {
-    //Serial.println("empty request! - stopping client");
     client.stop();
     return;
   }
@@ -142,10 +112,6 @@ void loop()
       Serial.println(sCmd);
     }
   }
-
-  //Package p;
-  //Serial.write((byte*)&p, sizeof(p));
-  
   
   ///////////////////////////
   // format the html response
@@ -177,7 +143,6 @@ void loop()
     sResponse += "<font color=\"#000000\"><body bgcolor=\"#d0d0f0\">";
     sResponse += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=yes\">";
     sResponse += "<h1>teuerung f&uumlr Helios Light Control</h1>";
-    //sResponse += "Ueber folgende Buttons kann die Funktionalitaet der Matrix, bzw der Lamp gesteuert werden.<BR>";
     sResponse += "<FONT SIZE=+2>";
         
     sResponse += "Matrix Control<BR>";
@@ -232,5 +197,4 @@ void loop()
   
   // and stop the client
   client.stop();
-  //Serial.println("Client disonnected");
 }
